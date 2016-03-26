@@ -43,7 +43,7 @@ public class JourneyFactoryTest {
 
     @Test
     public void badExample() throws Exception {
-        expectedException.expect(IllegalStateException.class);
+        expectedException.expect(Exception.class);
         journeyFactory.create(JourneyFactoryTest.class.getResourceAsStream("bad.journey"));
     }
 
