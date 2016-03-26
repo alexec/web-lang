@@ -4,13 +4,11 @@ import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
 import wl.domain.JourneysBuilder;
-import wl.domain.step.examination.ShouldBeChecked;
-import wl.domain.step.examination.ShouldNotBeChecked;
-import wl.domain.step.examination.TextOfShouldBe;
-import wl.domain.step.examination.TitleShouldBe;
+import wl.domain.step.examination.*;
 import wl.domain.step.interaction.*;
 
 import java.net.URI;
+import java.util.Collections;
 
 @SuppressWarnings("WeakerAccess")
 @BuildParseTree
@@ -31,6 +29,8 @@ public class JourneysParser extends BaseParser<Object> {
                                         Text(),
                                         Check(),
                                         Uncheck(),
+                                        Select(),
+                                        Attribute(),
                                         ShouldBeChecked(),
                                         ShouldNotBeChecked(),
                                         EMPTY
@@ -142,6 +142,45 @@ public class JourneysParser extends BaseParser<Object> {
                 Quote(),
                 Chars(),
                 push(dto.addStep(Uncheck.selector(match()))),
+                Quote()
+        );
+    }
+
+    Rule Select() {
+        return Sequence(
+                "select ",
+                Quote(),
+                Chars(),
+                push(match()),
+                Quote(),
+                " in ",
+                Quote(),
+                Chars(),
+                push(dto.addStep(Select.builder().values(Collections.singletonList((String) pop())).selector(match()).build())),
+                Quote()
+        );
+    }
+
+    Rule Attribute() {
+        return Sequence(
+                "attribute ",
+                Quote(),
+                Chars(),
+                push(match()),
+                Quote(),
+                " of ",
+                Quote(),
+                Chars(),
+                push(match()),
+                Quote(),
+                " should be ",
+                Quote(),
+                Chars(),
+                push(dto.addStep(AttributeShouldBe.builder()
+                        .expectedValue(match())
+                        .selector((String) pop())
+                        .attributeName((String) pop())
+                        .build())),
                 Quote()
         );
     }

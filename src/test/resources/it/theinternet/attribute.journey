@@ -1,0 +1,4 @@
+Journey: "Attribute"
+
+    go to "http://docs.seleniumhq.org"
+    attribute "id" of "#footer" should be "footer"
