@@ -31,6 +31,7 @@ public class JourneysParser extends BaseParser<Object> {
                                         Uncheck(),
                                         Select(),
                                         Attribute(),
+                                        ExecuteScript(),
                                         ShouldBeChecked(),
                                         ShouldNotBeChecked(),
                                         EMPTY
@@ -204,6 +205,16 @@ public class JourneysParser extends BaseParser<Object> {
                 Quote(),
                 " should not be checked",
                 push(dto.addStep(ShouldNotBeChecked.selector((String) pop())))
+        );
+    }
+
+    Rule ExecuteScript() {
+        return Sequence(
+                "execute script ",
+                Quote(),
+                Chars(),
+                push(dto.addStep(ExecuteScript.script(match()))),
+                Quote()
         );
     }
 
