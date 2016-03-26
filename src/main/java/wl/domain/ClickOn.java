@@ -1,8 +1,10 @@
 package wl.domain;
 
+import lombok.EqualsAndHashCode;
 import org.openqa.selenium.By;
 
 
+@EqualsAndHashCode
 public class ClickOn implements Step {
     private final String selector;
 
@@ -23,4 +25,6 @@ public class ClickOn implements Step {
     public String getDescription() {
         return String.format("click on \"%s\"", selector);
     }
+
+
 }

@@ -9,7 +9,7 @@ Inspired by Cucumber, but tailed completely for automating the testing of web ap
 * Test coverage.
 * Clicking by link text.
 * Running a single test.
-* First-class page objects.
+* First-class page objectsi
 * Full support for changing driver at runtime.
 
 ## Resources
