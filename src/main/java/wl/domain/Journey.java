@@ -7,11 +7,23 @@ import java.util.List;
 
 @Data
 public class Journey {
-    private String name;
-    private List<Step> steps = new ArrayList<>();
+    private final String name;
+    private final List<Step> steps;
+
+    public Journey(String name, List<Step> steps) {
+        this.name = name;
+        this.steps = steps;
+    }
 
     public static JourneyBuilder builder() {
         return new JourneyBuilder();
+    }
+
+    public String getName() {
+        return name;
+    }
+    public List<Step> getSteps() {
+        return steps;
     }
 
     public static class JourneyBuilder {
@@ -19,10 +31,7 @@ public class Journey {
         private List<Step> steps = new ArrayList<>();
 
         public Journey build() {
-            Journey journey = new Journey();
-            journey.setName(name);
-            journey.setSteps(steps);
-            return journey;
+            return new Journey(name, steps);
         }
 
         public JourneyBuilder name(String name) {

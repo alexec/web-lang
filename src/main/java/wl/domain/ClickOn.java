@@ -1,10 +1,10 @@
 package wl.domain;
 
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 import org.openqa.selenium.By;
 
 
-@EqualsAndHashCode
+@Data
 public class ClickOn implements Step {
     private final String selector;
 
@@ -12,7 +12,7 @@ public class ClickOn implements Step {
         this.selector = selector;
     }
 
-    public static Step selector(String selector) {
+    public static ClickOn selector(String selector) {
         return new ClickOn(selector);
     }
 
@@ -25,6 +25,5 @@ public class ClickOn implements Step {
     public String getDescription() {
         return String.format("click on \"%s\"", selector);
     }
-
 
 }

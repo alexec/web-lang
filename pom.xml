@@ -16,12 +16,45 @@
     <name>Web App Testing Lang</name>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <antlr.version>4.5.2-1</antlr.version>
-        <selenium.version>2.52.0</selenium.version>
+        <selenium.version>2.53.0</selenium.version>
     </properties>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.10</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/it/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-resource</id>
+                        <goals>
+                            <goal>add-test-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/it/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
@@ -32,6 +65,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -55,9 +89,16 @@
                             <targetClasses>
                                 <param>wl*</param>
                             </targetClasses>
+                            <excludedClasses>
+                                <class>wl.api.JourneysRunner</class>
+                                <class>wl.infrastructure.JourneyParser</class>
+                                <class>wl.infrastructure.JourneyRunner</class>
+                            </excludedClasses>
                             <targetTests>
                                 <param>wl*</param>
                             </targetTests>
+                            <coverageThreshold>65</coverageThreshold>
+                            <mutationThreshold>40</mutationThreshold>
                         </configuration>
                     </execution>
                 </executions>
@@ -92,6 +133,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>

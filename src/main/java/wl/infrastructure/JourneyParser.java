@@ -52,7 +52,7 @@ public class JourneyParser extends BaseParser<Object> {
                 Whitespace(),
                 Quote(),
                 Chars(),
-                push(dto.step(TitleShouldBe.builder().expectedTitle(match()).build())),
+                push(dto.step(TitleShouldBe.expectedTitle(match()))),
                 Quote()
         );
     }
@@ -97,7 +97,7 @@ public class JourneyParser extends BaseParser<Object> {
                 Whitespace(),
                 Quote(),
                 Url(),
-                push(dto.step(GoTo.builder().url(URI.create(match())).build())),
+                push(dto.step(GoTo.url(URI.create(match())))),
                 Quote()
         );
     }

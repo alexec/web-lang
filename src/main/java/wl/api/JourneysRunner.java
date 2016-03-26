@@ -29,6 +29,8 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
         for (URL url : Resources.getResources(clazz, u -> u.getPath().endsWith(".journey"))) {
             try (InputStream in = url.openStream()) {
                 children.add(new JourneyRunner(config, journeyFactory.create(in)));
+            } catch (IllegalStateException e) {
+                throw new InitializationError("cannot parse " + url + " due to " + e.getMessage());
             }
         }
     }

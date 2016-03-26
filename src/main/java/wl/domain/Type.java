@@ -4,11 +4,16 @@ import lombok.Builder;
 import lombok.Data;
 import org.openqa.selenium.By;
 
-@Builder
 @Data
+@Builder
 public class Type implements Step {
-    private String text;
-    private String selector;
+    private final String text;
+    private final String selector;
+
+    private Type(String text, String selector) {
+        this.text = text;
+        this.selector = selector;
+    }
 
     @Override
     public void execute(ExecutionContext context) {

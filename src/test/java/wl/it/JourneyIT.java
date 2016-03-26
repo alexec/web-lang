@@ -1,6 +1,7 @@
-package wl;
+package wl.it;
 
 import org.junit.runner.RunWith;
+import wl.FirefoxConfig;
 import wl.api.ContextConfig;
 import wl.api.JourneysRunner;
 

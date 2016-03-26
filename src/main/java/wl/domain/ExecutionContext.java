@@ -1,5 +1,6 @@
 package wl.domain;
 
+import com.google.common.base.Predicate;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +28,7 @@ public class ExecutionContext {
         return driver;
     }
 
-    WebDriverWait getWait() {
-        return new WebDriverWait(driver, 10);
+    void waitUntil(@SuppressWarnings("Guava") Predicate<WebDriver> predicate) {
+        new WebDriverWait(driver, 10).until(predicate);
     }
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.security.CodeSource;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,8 +51,11 @@ public class Resources {
 
     public static Set<URL> getResources(Class rootClass, Predicate<URL> filter) throws IOException, URISyntaxException {
         Set<URL> collectedURLs = new HashSet<>();
-        CodeSource src = rootClass.getProtectionDomain().getCodeSource();
-        iterateEntry(new File(src.getLocation().toURI()), filter, collectedURLs);
+        File codeRoot = new File(rootClass.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+        File searchRoot = new File(codeRoot, rootClass.getPackage().getName().replace(".", "/"));
+
+        iterateEntry(searchRoot, filter, collectedURLs);
         return collectedURLs;
     }
 }
