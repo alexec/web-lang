@@ -85,7 +85,7 @@ public class JourneyParser extends BaseParser<Object> {
                 Whitespace(),
                 Quote(),
                 Chars(),
-                push(dto.step(ClickOn.builder().selector(match()).build())),
+                push(dto.step(ClickOn.selector(match()))),
                 Quote()
 
         );

@@ -1,14 +1,18 @@
 package wl.domain;
 
-import lombok.Builder;
-import lombok.Data;
 import org.openqa.selenium.By;
 
-// TODO - remove builders
-@Builder
-@Data
+
 public class ClickOn implements Step {
-    private String selector;
+    private final String selector;
+
+    private ClickOn(String selector) {
+        this.selector = selector;
+    }
+
+    public static Step selector(String selector) {
+        return new ClickOn(selector);
+    }
 
     @Override
     public void execute(ExecutionContext context) {

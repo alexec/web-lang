@@ -20,7 +20,7 @@ public class JourneyTest {
                         .name("Searching on Google")
                         .steps(Arrays.asList(
                                 GoTo.builder().url(URI.create("http://www.google.com")).build(),
-                                ClickOn.builder().selector("input[name=q]").build(),
+                                ClickOn.selector("input[name=q]"),
                                 Type.builder().selector("input[name=q]").text("Cheese!").build(),
                                 Submit.INSTANCE,
                                 TitleShouldBe.builder().expectedTitle("Cheese! - Google Search").build()
