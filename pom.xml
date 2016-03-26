@@ -2,7 +2,12 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
 
     <groupId>web-app-testing-lang</groupId>
     <artifactId>web-lang</artifactId>
@@ -12,13 +17,14 @@
 
     <properties>
         <antlr.version>4.5.2-1</antlr.version>
+        <selenium.version>2.52.0</selenium.version>
     </properties>
 
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.5.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -38,6 +44,21 @@
             <groupId>org.parboiled</groupId>
             <artifactId>parboiled-java</artifactId>
             <version>1.1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-htmlunit-driver</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.19</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.6</version>
         </dependency>
         <!-- test -->
         <dependency>

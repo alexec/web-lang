@@ -3,7 +3,7 @@ package wl;
 import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
-import wl.model.Go;
+import wl.model.GoTo;
 import wl.model.Journey;
 
 import java.net.URI;
@@ -19,7 +19,7 @@ public class JourneyParser extends BaseParser<Object> {
                 Whitespace(),
                 Name(),
                 NewLine(),
-                OneOrMore(Sequence(Step(), NewLine())),
+                ZeroOrMore(Sequence(Step(), NewLine())),
                 EOI,
                 push(dto.build())
         );
@@ -30,11 +30,11 @@ public class JourneyParser extends BaseParser<Object> {
     }
 
     Rule Whitespace() {
-        return OneOrMore(' ', '\t');
+        return OneOrMore(AnyOf(" \t"));
     }
 
     Rule Step() {
-        return Sequence(String("go"), Whitespace(), Url(), push(dto.step(Go.builder().url(URI.create(match())).build())));
+        return Sequence("go to", Whitespace(), Url(), push(dto.step(GoTo.builder().url(URI.create(match())).build())));
     }
 
     Rule Url() {

@@ -3,7 +3,7 @@ package wl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import wl.model.Go;
+import wl.model.GoTo;
 import wl.model.Journey;
 
 import java.net.URI;
@@ -16,13 +16,12 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class JourneyTest {
 
-    private final JourneyFactory journeyFactory = new JourneyFactory();
-    private final String text;
     private final Journey expectedJourney;
+    private final Journey journey;
 
     public JourneyTest(String text, Journey expectedJourney) {
-        this.text = text;
         this.expectedJourney = expectedJourney;
+        journey = new JourneyFactory().create(text);
     }
 
     @Parameterized.Parameters(name = "{0}")
@@ -30,9 +29,9 @@ public class JourneyTest {
         return Arrays.asList(new Object[][]{
                 {"Journey: Searching on Google\n", Journey.builder().name("Searching on Google").build()},
                 {"Journey: Searching on Google\n" +
-                        "open https://www.google.co.uk", Journey.builder()
+                        "go to http://www.google.com\n", Journey.builder()
                         .name("Searching on Google")
-                        .steps(Collections.singletonList(Go.builder().url(URI.create("http://www.google.co.uk")).build()))
+                        .steps(Collections.singletonList(GoTo.builder().url(URI.create("http://www.google.com")).build()))
                         .build()}
         });
 
@@ -40,7 +39,12 @@ public class JourneyTest {
 
     @Test
     public void example() throws Exception {
-        assertEquals(expectedJourney, journeyFactory.create(text));
+        assertEquals(expectedJourney, journey);
     }
 
+    @Test
+    public void execute() throws Exception {
+
+        journey.execute();
+    }
 }
