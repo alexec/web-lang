@@ -17,15 +17,16 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule Journey() {
         return Sequence(
-                // TODO -- move to own rule
-                "Journey:",
-                Whitespace(),
-                Name(),
+                Description(),
                 NewLine(),
                 ZeroOrMore(Sequence(Step(), NewLine())),
                 EOI,
                 push(dto.build())
         );
+    }
+
+    Rule Description() {
+        return Sequence("Journey:", Whitespace(), Name());
     }
 
     Rule NewLine() {
