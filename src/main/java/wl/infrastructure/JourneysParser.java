@@ -8,6 +8,7 @@ import wl.domain.step.examination.*;
 import wl.domain.step.interaction.*;
 
 import java.net.URI;
+import java.nio.file.Paths;
 import java.util.Collections;
 
 @SuppressWarnings("WeakerAccess")
@@ -38,6 +39,7 @@ public class JourneysParser extends BaseParser<Object> {
                                         SwitchToDefaultContent(),
                                         ShouldBeChecked(),
                                         ShouldNotBeChecked(),
+                                        CaptureTo(),
                                         EMPTY
                                 ),
                                 Optional(Whitespace()),
@@ -251,6 +253,16 @@ public class JourneysParser extends BaseParser<Object> {
         return Sequence(
                 "dismiss alert",
                 push(dto.addStep(DismissAlert.INSTANCE))
+        );
+    }
+
+    Rule CaptureTo() {
+        return Sequence(
+                "capture to ",
+                Quote(),
+                Chars(),
+                push(dto.addStep(Capture.to(Paths.get(match())))),
+                Quote()
         );
     }
 

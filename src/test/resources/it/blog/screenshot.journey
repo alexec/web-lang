@@ -1,0 +1,4 @@
+Journey: "Capture Blog"
+
+    go to "http://www.alexecollins.com"
+    capture to "target/alexecollins.png"
