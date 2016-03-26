@@ -1,0 +1,5 @@
+Journey: "Selecting a radio-button"
+
+    go to "http://test.rubywatir.com/radios.php"
+    click on "input[type='radio'][value='No']"
+    "#radioId" should be checked
