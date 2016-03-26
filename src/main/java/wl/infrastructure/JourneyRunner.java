@@ -8,12 +8,14 @@ import org.junit.runners.model.InitializationError;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import wl.api.AfterJourney;
+import wl.api.BeforeJourney;
 import wl.domain.ExecutionContext;
 import wl.domain.Journey;
 import wl.domain.step.Step;
+import wl.infrastructure.context.Beans;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,21 +54,16 @@ public class JourneyRunner extends ParentRunner<Step> {
     @Override
     public void run(RunNotifier notifier) {
 
-        WebDriver driver = createDriver();
+        WebDriver driver = Beans.getBeanByType(config, WebDriver.class);
+
         context = new ExecutionContext(driver);
+        Beans.invokeMethodsByAnnotation(config, BeforeJourney.class, journey);
         try {
             super.run(notifier);
         } finally {
+            Beans.invokeMethodsByAnnotation(config, AfterJourney.class, journey);
             driver.quit();
             context = null;
-        }
-    }
-
-    private WebDriver createDriver() {
-        try {
-            return WebDriver.class.cast(config.getClass().getMethod("webDriver").invoke(config));
-        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            throw new IllegalStateException("failed to create driver", e);
         }
     }
 
