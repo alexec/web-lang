@@ -3,7 +3,7 @@
 
 A domain specific language for automating and testing web applications.
 
-Inspired by Cucumber, but tailed completely for automating the testing of web applications.
+Inspired by Cucumber, but tailored for automating the testing of web applications.
 
 You can run a group of tests to those just containing a string:
 

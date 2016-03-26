@@ -1,0 +1,5 @@
+Journey: "Choosing single select options"
+
+    go to "http://odyniec.net/articles/multiple-select-fields/"
+    select "Olives" in "select[name='ingredients[]']"
+    attribute "selected" of "select[name='ingredients[]'] option[value='Olives']" should be "true"
