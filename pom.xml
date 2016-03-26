@@ -65,7 +65,7 @@
                             <targetTests>
                                 <param>wl*</param>
                             </targetTests>
-                            <coverageThreshold>65</coverageThreshold>
+                            <coverageThreshold>50</coverageThreshold>
                             <mutationThreshold>20</mutationThreshold>
                         </configuration>
                     </execution>
