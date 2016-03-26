@@ -7,6 +7,8 @@ import wl.domain.*;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,18 +21,19 @@ public class JourneyFactoryTest {
 
     @Test
     public void goodExample() throws Exception {
-        Journey journey = journeyFactory.create(JourneyFactoryTest.class.getResourceAsStream("google-search.journey"));
-        assertEquals(Journey.builder()
-                        .name("Searching on Google")
-                        .steps(Arrays.asList(
-                                GoTo.url(URI.create("http://www.google.com")),
-                                ClickOn.selector("input[name=q]"),
-                                Type.builder().selector("input[name=q]").text("Cheese!").build(),
-                                Submit.INSTANCE,
-                                TitleShouldBe.expectedTitle("Cheese! - Google Search")
-                        ))
-                        .build()
-                , journey);
+        List<Journey> journeys = journeyFactory.create(JourneyFactoryTest.class.getResourceAsStream("google-search.journey"));
+
+        Journey expectedJourney = new Journey("Searching on Google");
+        List<Journey> expectedJourneys = Collections.singletonList(expectedJourney);
+        expectedJourney.getSteps().addAll(Arrays.asList(
+                GoTo.url(URI.create("http://www.google.com")),
+                ClickOn.selector("input[name=q]"),
+                Type.builder().selector("input[name=q]").text("Cheese!").build(),
+                Submit.INSTANCE,
+                TitleShouldBe.expectedTitle("Cheese! - Google Search")
+        ));
+
+        assertEquals(expectedJourneys, journeys);
     }
 
     @Test

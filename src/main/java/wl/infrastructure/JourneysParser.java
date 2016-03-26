@@ -9,10 +9,10 @@ import java.net.URI;
 
 @SuppressWarnings("WeakerAccess")
 @BuildParseTree
-public class JourneyParser extends BaseParser<Object> {
-    Journey.JourneyBuilder dto = Journey.builder();
+public class JourneysParser extends BaseParser<Object> {
+    JourneysBuilder dto = new JourneysBuilder();
 
-    Rule Journey() {
+    Rule Journeys() {
         return Sequence(
                 OneOrMore(
                         Sequence(
@@ -25,6 +25,8 @@ public class JourneyParser extends BaseParser<Object> {
                                         Submit(),
                                         Title(),
                                         Text(),
+                                        Check(),
+                                        ShouldBeChecked(),
                                         EMPTY), Optional(Whitespace()), Optional(Comment()), NewLine())
                 ),
                 EOI,
@@ -37,7 +39,13 @@ public class JourneyParser extends BaseParser<Object> {
     }
 
     Rule Description() {
-        return Sequence("Journey: ", Name());
+        return Sequence(
+                "Journey: ",
+                Quote(),
+                Chars(),
+                push(dto.addJourney(match())),
+                Quote()
+        );
     }
 
 
@@ -51,7 +59,7 @@ public class JourneyParser extends BaseParser<Object> {
                 " should be ",
                 Quote(),
                 Chars(),
-                push(dto.step(TextOfShouldBe.builder().selector((String) pop()).expectedText(match()).build())),
+                push(dto.addStep(TextOfShouldBe.builder().selector((String) pop()).expectedText(match()).build())),
                 Quote()
         );
     }
@@ -61,13 +69,13 @@ public class JourneyParser extends BaseParser<Object> {
                 "title should be ",
                 Quote(),
                 Chars(),
-                push(dto.step(TitleShouldBe.expectedTitle(match()))),
+                push(dto.addStep(TitleShouldBe.expectedTitle(match()))),
                 Quote()
         );
     }
 
     Rule Submit() {
-        return Sequence("submit", push(dto.step(Submit.INSTANCE)));
+        return Sequence("submit", push(dto.addStep(Submit.INSTANCE)));
     }
 
     Rule Type() {
@@ -80,7 +88,7 @@ public class JourneyParser extends BaseParser<Object> {
                 " into ",
                 Quote(),
                 Chars(),
-                push(dto.step(Type.builder().text((String) pop()).selector(match()).build())),
+                push(dto.addStep(Type.builder().text((String) pop()).selector(match()).build())),
                 Quote()
         );
     }
@@ -90,7 +98,7 @@ public class JourneyParser extends BaseParser<Object> {
                 "click on ",
                 Quote(),
                 Chars(),
-                push(dto.step(ClickOn.selector(match()))),
+                push(dto.addStep(ClickOn.selector(match()))),
                 Quote()
 
         );
@@ -101,17 +109,33 @@ public class JourneyParser extends BaseParser<Object> {
                 "go to ",
                 Quote(),
                 Url(),
-                push(dto.step(GoTo.url(URI.create(match())))),
+                push(dto.addStep(GoTo.url(URI.create(match())))),
                 Quote()
+        );
+    }
+
+    Rule Check() {
+        return Sequence(
+                "check ",
+                Quote(),
+                Chars(),
+                push(dto.addStep(Check.selector(match()))),
+                Quote()
+        );
+    }
+
+    Rule ShouldBeChecked() {
+        return Sequence(
+                Quote(),
+                Chars(),
+                push(dto.addStep(ShouldBeChecked.selector(match()))),
+                Quote(),
+                " should be checked"
         );
     }
 
     Rule Url() {
         return Chars();
-    }
-
-    Rule Name() {
-        return Sequence(Quote(), Chars(), push(dto.name(match())), Quote());
     }
 
     Rule Chars() {
@@ -121,7 +145,6 @@ public class JourneyParser extends BaseParser<Object> {
     Rule Quote() {
         return Ch('\"');
     }
-
 
     Rule Whitespace() {
         return ZeroOrMore(AnyOf(" \t"));

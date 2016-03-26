@@ -24,7 +24,7 @@ public class TextOfShouldBe implements Step {
     @Override
     public void execute(ExecutionContext context) {
         WebElement element = context.getDriver().findElement(By.cssSelector(selector));
-        assertEquals(expectedText, element.getTagName().equals("input") ? element.getAttribute("value") : element.getText());
+        assertEquals(getDescription(), expectedText, element.getTagName().equals("input") ? element.getAttribute("value") : element.getText());
     }
 
     @Override

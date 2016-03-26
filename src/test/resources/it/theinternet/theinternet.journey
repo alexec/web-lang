@@ -1,0 +1,5 @@
+Journey: "Form controls"
+
+    go to "https://the-internet.herokuapp.com/checkboxes"
+    check "input[type='checkbox']:nth-child(1)"
+    "input[type='checkbox']:nth-child(1)" should be checked

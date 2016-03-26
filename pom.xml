@@ -59,7 +59,7 @@
                             </targetClasses>
                             <excludedClasses>
                                 <class>wl.api.JourneysRunner</class>
-                                <class>wl.infrastructure.JourneyParser</class>
+                                <class>wl.infrastructure.JourneysParser</class>
                                 <class>wl.infrastructure.JourneyRunner</class>
                             </excludedClasses>
                             <targetTests>

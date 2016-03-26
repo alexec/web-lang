@@ -5,6 +5,7 @@ import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
+import wl.domain.Journey;
 import wl.infrastructure.JourneyFactory;
 import wl.infrastructure.JourneyRunner;
 import wl.infrastructure.Resources;
@@ -28,7 +29,9 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
 
         for (URL url : Resources.getResources(clazz, u -> u.getPath().endsWith(".journey"))) {
             try (InputStream in = url.openStream()) {
-                children.add(new JourneyRunner(config, journeyFactory.create(in)));
+                for (Journey journey : journeyFactory.create(in)) {
+                    children.add(new JourneyRunner(config, journey));
+                }
             } catch (IllegalStateException e) {
                 throw new InitializationError("cannot parse " + url + " due to " + e.getMessage());
             }

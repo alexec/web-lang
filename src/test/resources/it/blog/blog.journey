@@ -1,5 +1,10 @@
 Journey: "View blog posts"
 
-go to "http://www.alexecollins.com"
-click on "a[href='/blog']"
-title should be "Alex Collins - Blog"
+    go to "http://www.alexecollins.com"
+    click on "a[href='/blog']"
+    title should be "Alex Collins - Blog"
+
+Journey: "View Docker tags"
+
+    go to "http://www.alexecollins.com/tags/docker"
+    text of "h1:nth-child(2)" should be "ARTICLES TAGGED 'DOCKER'"
