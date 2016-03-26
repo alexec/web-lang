@@ -10,7 +10,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import wl.domain.ExecutionContext;
 import wl.domain.Journey;
-import wl.domain.Step;
+import wl.domain.step.Step;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

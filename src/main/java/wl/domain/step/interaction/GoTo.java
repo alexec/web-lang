@@ -1,7 +1,9 @@
-package wl.domain;
+package wl.domain.step.interaction;
 
 import lombok.Data;
 import lombok.NonNull;
+import wl.domain.ExecutionContext;
+import wl.domain.step.Step;
 
 import java.net.URI;
 

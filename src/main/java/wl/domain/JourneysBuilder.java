@@ -1,5 +1,7 @@
 package wl.domain;
 
+import wl.domain.step.Step;
+
 import java.util.Deque;
 import java.util.LinkedList;
 

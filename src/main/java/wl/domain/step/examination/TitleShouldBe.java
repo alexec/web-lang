@@ -1,8 +1,10 @@
-package wl.domain;
+package wl.domain.step.examination;
 
 import lombok.Data;
 import lombok.NonNull;
 import org.openqa.selenium.WebDriver;
+import wl.domain.ExecutionContext;
+import wl.domain.step.Step;
 
 import static org.junit.Assert.assertEquals;
 

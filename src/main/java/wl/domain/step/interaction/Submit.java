@@ -1,4 +1,7 @@
-package wl.domain;
+package wl.domain.step.interaction;
+
+import wl.domain.ExecutionContext;
+import wl.domain.step.Step;
 
 public enum Submit implements Step {
     INSTANCE;

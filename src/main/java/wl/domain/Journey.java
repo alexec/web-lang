@@ -2,6 +2,7 @@ package wl.domain;
 
 import lombok.Data;
 import lombok.NonNull;
+import wl.domain.step.Step;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Journey {
         return steps;
     }
 
-    public boolean addStep(Step step) {
+    boolean addStep(Step step) {
         return steps.add(step);
     }
 }

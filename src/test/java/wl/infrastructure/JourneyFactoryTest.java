@@ -3,7 +3,12 @@ package wl.infrastructure;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import wl.domain.*;
+import wl.domain.Journey;
+import wl.domain.step.examination.TitleShouldBe;
+import wl.domain.step.interaction.ClickOn;
+import wl.domain.step.interaction.GoTo;
+import wl.domain.step.interaction.Submit;
+import wl.domain.step.interaction.Type;
 
 import java.net.URI;
 import java.util.Arrays;
@@ -39,7 +44,6 @@ public class JourneyFactoryTest {
     @Test
     public void badExample() throws Exception {
         expectedException.expect(IllegalStateException.class);
-        expectedException.expectMessage("Invalid input 'r'");
         journeyFactory.create(JourneyFactoryTest.class.getResourceAsStream("bad.journey"));
     }
 

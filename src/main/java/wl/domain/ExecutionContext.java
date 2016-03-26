@@ -39,12 +39,12 @@ public class ExecutionContext {
         return driver;
     }
 
-    void waitUntil(Predicate<WebDriver> condition) {
+    public void waitUntil(Predicate<WebDriver> condition) {
         waitUntil(condition, webDriver -> {
         });
     }
 
-    void waitUntil(Predicate<WebDriver> condition, Consumer<WebDriver> advance) {
+    public void waitUntil(Predicate<WebDriver> condition, Consumer<WebDriver> advance) {
         repeatUntil(condition, SLEEP.andThen(advance));
     }
 

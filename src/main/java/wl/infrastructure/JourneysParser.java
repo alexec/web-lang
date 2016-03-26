@@ -3,7 +3,11 @@ package wl.infrastructure;
 import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
-import wl.domain.*;
+import wl.domain.JourneysBuilder;
+import wl.domain.step.examination.ShouldBeChecked;
+import wl.domain.step.examination.TextOfShouldBe;
+import wl.domain.step.examination.TitleShouldBe;
+import wl.domain.step.interaction.*;
 
 import java.net.URI;
 

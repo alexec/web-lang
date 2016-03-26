@@ -1,9 +1,11 @@
-package wl.domain;
+package wl.domain.step.interaction;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 import org.openqa.selenium.By;
+import wl.domain.ExecutionContext;
+import wl.domain.step.Step;
 
 @Data
 @Builder
