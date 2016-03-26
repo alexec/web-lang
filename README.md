@@ -3,7 +3,60 @@
 
 A domain specific language for automating and testing web applications.
 
-Inspired by Cucumber, but tailored for automating the testing of web applications.
+## Usage
+
+To run tests, you'll need to set-up a Junit runner, within your test sources:
+
+~~~java
+@RunWith(JourneysRunner.class)
+@ContextConfig(FirefoxConfig.class)
+public class JourneyIT {
+}
+~~~
+
+You'll need to create a config file too, this allows you to choose which driver you're using. If you want to have
+
+~~~java
+public class Config {
+
+    public WebDriver webDriver() {
+        return new FirefoxDriver();
+    }
+}
+~~~
+
+If you need to do any set-up before a journey, your config can have annotated methods as follows:
+
+~~~java
+public class Config {
+    @BeforeJourney
+    public void beforeJourney(Journey journey) {
+        System.out.printf("journey \"%s\" starting%n", journey.getName());
+    }
+
+    @AfterJourney
+    public void afterJourney(Journey journey) {
+        System.out.printf("journey \"%s\" over%n", journey.getName());
+    }
+    // ...
+}
+~~~
+
+In the same path as your test (e.g. if your tests are in `src/test/java/myapp` then your resources should be in `src/test/resources/myapp`), you should create journey files. Each file should container one or more journeys:
+
+~~~
+Journey: "Searching on Google"
+
+    # the standard Google search
+
+    go to "http://www.google.com"
+    click on "input[name=q]"
+    type "Cheese!" into "input[name=q]"
+    submit
+    title should be "Cheese! - Google Search"
+    text of "input[name=q]" should be "Cheese!"
+~~~
+
 
 You can run a group of tests to those just containing a string:
 
