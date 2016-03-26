@@ -1,0 +1,3 @@
+Journey: "View blog posts"
+go to "http://www.alexecollins.com"
+click on "a[href='/blog']"
