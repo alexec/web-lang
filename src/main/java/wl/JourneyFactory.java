@@ -6,9 +6,12 @@ import org.parboiled.parserunners.RecoveringParseRunner;
 import org.parboiled.support.ParsingResult;
 import wl.model.Journey;
 
+import java.io.InputStream;
+import java.util.Scanner;
+
 class JourneyFactory {
 
-    Journey create(String text) {
+    private Journey create(String text) {
         JourneyParser parser = Parboiled.createParser(JourneyParser.class);
         RecoveringParseRunner<Journey> runner = new RecoveringParseRunner<>(parser.Journey());
         ParsingResult<Journey> result = runner.run(text);
@@ -18,4 +21,7 @@ class JourneyFactory {
         return result.resultValue;
     }
 
+    Journey create(InputStream in) {
+        return create(new Scanner(in).useDelimiter("\\A").next());
+    }
 }
