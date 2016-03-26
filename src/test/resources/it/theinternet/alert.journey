@@ -1,0 +1,4 @@
+Journey: "Alert"
+
+    execute script "alert('hello');"
+    dismiss alert

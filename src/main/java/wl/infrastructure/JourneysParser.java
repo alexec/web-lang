@@ -32,6 +32,7 @@ public class JourneysParser extends BaseParser<Object> {
                                         Select(),
                                         Attribute(),
                                         ExecuteScript(),
+                                        DismissAlert(),
                                         ShouldBeChecked(),
                                         ShouldNotBeChecked(),
                                         EMPTY
@@ -217,6 +218,15 @@ public class JourneysParser extends BaseParser<Object> {
                 Quote()
         );
     }
+
+
+    Rule DismissAlert() {
+        return Sequence(
+                "dismiss alert",
+                push(dto.addStep(DismissAlert.INSTANCE))
+        );
+    }
+
 
     Rule Url() {
         return Chars();
