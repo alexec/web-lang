@@ -7,3 +7,4 @@ Journey: "Frames by index"
 
     go to "https://the-internet.herokuapp.com/nested_frames"
     switch to frame 0
+    switch to default content

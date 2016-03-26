@@ -35,6 +35,7 @@ public class JourneysParser extends BaseParser<Object> {
                                         DismissAlert(),
                                         SwitchToFrameByName(),
                                         SwitchToFrameByIndex(),
+                                        SwitchToDefaultContent(),
                                         ShouldBeChecked(),
                                         ShouldNotBeChecked(),
                                         EMPTY
@@ -236,6 +237,13 @@ public class JourneysParser extends BaseParser<Object> {
                 "switch to frame ",
                 Int(),
                 push(dto.addStep(SwitchToFrameByIndex.index(Integer.parseInt(match()))))
+        );
+    }
+
+    Rule SwitchToDefaultContent() {
+        return Sequence(
+                "switch to default content",
+                push(dto.addStep(SwitchToDefaultContent.INSTANCE))
         );
     }
 

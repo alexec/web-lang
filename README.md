@@ -13,8 +13,9 @@ mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 
 ## Road-map
 
-* Frames.
 * Windows.
+* Prompts.
+* Confirm.
 * Multi-select.
 * Clicking by link text.
 * Tags.
