@@ -47,21 +47,22 @@ public class JourneyParser extends BaseParser<Object> {
         return Sequence(
                 "click on",
                 Whitespace(),
-                Selector(),
-                push(dto.step(ClickOn.builder().selector(By.cssSelector(match())).build()))
-        );
-    }
+                Quote(),
+                Chars(),
+                push(dto.step(ClickOn.builder().selector(By.cssSelector(match())).build())),
+                Quote()
 
-    Rule Selector() {
-        return Chars();
+        );
     }
 
     Rule GoTo() {
         return Sequence(
                 "go to",
                 Whitespace(),
+                Quote(),
                 Url(),
-                push(dto.step(GoTo.builder().url(URI.create(match())).build()))
+                push(dto.step(GoTo.builder().url(URI.create(match())).build())),
+                Quote()
         );
     }
 
@@ -70,7 +71,7 @@ public class JourneyParser extends BaseParser<Object> {
     }
 
     Rule Name() {
-        return Sequence(Chars(), push(dto.name(match())));
+        return Sequence(Quote(), Chars(), push(dto.name(match())), Quote());
     }
 
     Rule Chars() {
