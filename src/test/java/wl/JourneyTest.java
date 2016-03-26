@@ -1,11 +1,13 @@
 package wl;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import wl.model.ClickOn;
 import wl.model.GoTo;
 import wl.model.Journey;
 
 import java.net.URI;
-import java.util.Collections;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,7 +21,10 @@ public class JourneyTest {
     public void example() throws Exception {
         assertEquals(Journey.builder()
                         .name("Searching on Google")
-                        .steps(Collections.singletonList(GoTo.builder().url(URI.create("http://www.google.com")).build()))
+                        .steps(Arrays.asList(
+                                GoTo.builder().url(URI.create("http://www.google.com")).build(),
+                                ClickOn.builder().selector(By.cssSelector("#q")).build()
+                        ))
                         .build()
                 , journey);
     }
