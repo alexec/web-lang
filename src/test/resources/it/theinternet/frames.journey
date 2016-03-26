@@ -1,0 +1,5 @@
+Journey: "Frames"
+
+    go to "https://the-internet.herokuapp.com/nested_frames"
+    switch to frame "frame-top"
+

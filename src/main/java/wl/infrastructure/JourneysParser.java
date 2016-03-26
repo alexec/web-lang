@@ -33,6 +33,7 @@ public class JourneysParser extends BaseParser<Object> {
                                         Attribute(),
                                         ExecuteScript(),
                                         DismissAlert(),
+                                        SwitchToFrameByName(),
                                         ShouldBeChecked(),
                                         ShouldNotBeChecked(),
                                         EMPTY
@@ -218,6 +219,17 @@ public class JourneysParser extends BaseParser<Object> {
                 Quote()
         );
     }
+
+    Rule SwitchToFrameByName() {
+        return Sequence(
+                "switch to frame ",
+                Quote(),
+                Chars(),
+                push(dto.addStep(SwitchToFrameByName.name(match()))),
+                Quote()
+        );
+    }
+
 
 
     Rule DismissAlert() {

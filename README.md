@@ -15,6 +15,7 @@ mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 
 * Frames.
 * Windows.
+* Multi-select.
 * Clicking by link text.
 * Tags.
 * First-class page objects.
