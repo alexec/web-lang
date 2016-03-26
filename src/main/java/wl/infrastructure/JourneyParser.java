@@ -48,10 +48,6 @@ public class JourneyParser extends BaseParser<Object> {
         return Ch('\n');
     }
 
-    Rule Spacing() {
-        return OneOrMore(Whitespace());
-    }
-
     Rule Text() {
         return Sequence(
                 "text of ",
