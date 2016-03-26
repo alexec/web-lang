@@ -5,12 +5,18 @@ A domain specific language for automating and testing web applications.
 
 Inspired by Cucumber, but tailed completely for automating the testing of web applications.
 
+You can run a group of tests to those just containing a string:
+
+~~~
+mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
+~~~
+
 ## Road-map
 
 * Frames.
 * Windows.
 * Clicking by link text.
-* Running a single test.
+* Tags.
 * First-class page objects.
 * Full support for changing driver at runtime.
 
