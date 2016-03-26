@@ -2,8 +2,6 @@ package wl.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +14,6 @@ public class Journey {
 
     public static JourneyBuilder builder() {
         return new JourneyBuilder();
-    }
-
-    public void execute() {
-        log.info("» Journey \"{}\"", name);
-        WebDriver driver = new HtmlUnitDriver();
-        try {
-            for (Step step : steps) {
-                step.execute(driver);
-            }
-            log.info("» Success");
-        } catch (Exception e) {
-            log.error("» Error", e);
-        } catch (AssertionError e) {
-            log.warn("» Failed: {}", e.getMessage());
-        } finally {
-            driver.quit();
-            log.info("» Finished");
-        }
     }
 
     public static class JourneyBuilder {

@@ -15,4 +15,9 @@ public class GoTo implements Step {
     public void execute(WebDriver driver) {
         driver.get(url.toString());
     }
+
+    @Override
+    public String getDescription() {
+        return String.format("go to \"%s\"", url);
+    }
 }

@@ -1,12 +1,12 @@
 package wl;
 
-import org.openqa.selenium.By;
 import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
 import wl.model.ClickOn;
 import wl.model.GoTo;
 import wl.model.Journey;
+import wl.model.Type;
 
 import java.net.URI;
 
@@ -40,7 +40,26 @@ public class JourneyParser extends BaseParser<Object> {
     Rule Step() {
         return FirstOf(
                 GoTo(),
-                ClickOn()
+                ClickOn(),
+                Type()
+        );
+    }
+
+    Rule Type() {
+        return Sequence(
+                "type",
+                Whitespace(),
+                Quote(),
+                Chars(),
+                push(match()),
+                Quote(),
+                Whitespace(),
+                "into",
+                Whitespace(),
+                Quote(),
+                Chars(),
+                push(dto.step(Type.builder().text((String) pop()).selector(match()).build())),
+                Quote()
         );
     }
 
@@ -50,7 +69,7 @@ public class JourneyParser extends BaseParser<Object> {
                 Whitespace(),
                 Quote(),
                 Chars(),
-                push(dto.step(ClickOn.builder().selector(By.cssSelector(match())).build())),
+                push(dto.step(ClickOn.builder().selector(match()).build())),
                 Quote()
 
         );

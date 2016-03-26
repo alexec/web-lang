@@ -7,16 +7,17 @@ import org.openqa.selenium.WebDriver;
 
 @Builder
 @Data
-public class ClickOn implements Step {
+public class Type implements Step {
+    private String text;
     private String selector;
 
     @Override
     public void execute(WebDriver driver) {
-        driver.findElement(By.cssSelector(selector)).click();
+        driver.findElement(By.cssSelector(selector)).sendKeys(text);
     }
 
     @Override
     public String getDescription() {
-        return String.format("click on \"%s\"", selector);
+        return String.format("type \"%s\" into \"%s\"", text, selector);
     }
 }
