@@ -16,6 +16,7 @@ public class JourneyParser extends BaseParser<Object> {
         return Sequence(
                 OneOrMore(
                         Sequence(
+                                Optional(Whitespace()),
                                 FirstOf(
                                         Description(),
                                         GoTo(),
@@ -31,11 +32,6 @@ public class JourneyParser extends BaseParser<Object> {
         );
     }
 
-
-    Rule Whitespace() {
-        return AnyOf(" \t");
-    }
-
     Rule Comment() {
         return Sequence("#", OneOrMore(TestNot(NewLine()), ANY));
     }
@@ -44,9 +40,6 @@ public class JourneyParser extends BaseParser<Object> {
         return Sequence("Journey: ", Name());
     }
 
-    Rule NewLine() {
-        return Ch('\n');
-    }
 
     Rule Text() {
         return Sequence(
@@ -127,6 +120,15 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule Quote() {
         return Ch('\"');
+    }
+
+
+    Rule Whitespace() {
+        return ZeroOrMore(AnyOf(" \t"));
+    }
+
+    Rule NewLine() {
+        return Ch('\n');
     }
 
 }
