@@ -5,12 +5,19 @@ import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import wl.domain.ExecutionContext;
 import wl.domain.Journey;
 import wl.domain.Step;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 // https://github.com/cucumber/cucumber-jvm/blob/master/junit/src/main/java/cucumber/runtime/junit/FeatureRunner.java
@@ -43,7 +50,6 @@ public class JourneyRunner extends ParentRunner<Step> {
     }
 
     @Override
-
     public void run(RunNotifier notifier) {
 
         WebDriver driver = createDriver();
@@ -72,8 +78,27 @@ public class JourneyRunner extends ParentRunner<Step> {
             child.execute(context);
         } catch (Throwable t) {
             notifier.fireTestFailure(new Failure(description, t));
+            captureScreenshot(description);
         } finally {
             notifier.fireTestFinished(description);
+        }
+    }
+
+    private void captureScreenshot(Description description) {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) context.getDriver();
+
+        Path file = takesScreenshot.getScreenshotAs(OutputType.FILE).toPath();
+
+        Path screenshots = Paths.get("target", "screenshots");
+        try {
+            if (!screenshots.toFile().exists()) {
+                Files.createDirectory(screenshots);
+            }
+            Path dest = screenshots.resolve(description + ".png");
+            System.out.println("captured " + dest);
+            Files.move(file, dest, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new IllegalStateException("failed to capture screenshot", e);
         }
     }
 }

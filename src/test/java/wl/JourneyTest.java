@@ -22,7 +22,8 @@ public class JourneyTest {
                                 GoTo.builder().url(URI.create("http://www.google.com")).build(),
                                 ClickOn.builder().selector("input[name=q]").build(),
                                 Type.builder().selector("input[name=q]").text("Cheese!").build(),
-                                Submit.INSTANCE
+                                Submit.INSTANCE,
+                                TitleShouldBe.builder().expectedTitle("Cheese! - Google Search").build()
                         ))
                         .build()
                 , journey);

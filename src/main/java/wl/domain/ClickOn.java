@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.openqa.selenium.By;
 
+// TODO - remove builders
 @Builder
 @Data
 public class ClickOn implements Step {

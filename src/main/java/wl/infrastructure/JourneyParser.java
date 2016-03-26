@@ -39,7 +39,21 @@ public class JourneyParser extends BaseParser<Object> {
                 GoTo(),
                 ClickOn(),
                 Type(),
-                Submit()
+                Submit(),
+                Title()
+        );
+    }
+
+    Rule Title() {
+        return Sequence(
+                "title",
+                Whitespace(),
+                "should be",
+                Whitespace(),
+                Quote(),
+                Chars(),
+                push(dto.step(TitleShouldBe.builder().expectedTitle(match()).build())),
+                Quote()
         );
     }
 
