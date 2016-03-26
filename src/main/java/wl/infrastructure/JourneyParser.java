@@ -14,29 +14,26 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule Journey() {
         return Sequence(
-                DescriptionLine(),
                 OneOrMore(
-                        FirstOf(StepLine(), CommentLine(), BlankLine())
+                        Sequence(
+                                FirstOf(
+                                        Description(),
+                                        GoTo(),
+                                        ClickOn(),
+                                        Type(),
+                                        Submit(),
+                                        Title(),
+                                        Text(),
+                                        EMPTY), Optional(Whitespace()), Optional(Comment()), NewLine())
                 ),
                 EOI,
                 push(dto.build())
         );
     }
 
-    Rule DescriptionLine() {
-        return Sequence(Description(), NewLine());
-    }
 
-    Rule BlankLine() {
-        return NewLine();
-    }
-
-    Rule StepLine() {
-        return Sequence(Step(), NewLine());
-    }
-
-    Rule CommentLine() {
-        return Sequence(Whitespace(), Comment(), NewLine());
+    Rule Whitespace() {
+        return AnyOf(" \t");
     }
 
     Rule Comment() {
@@ -44,40 +41,25 @@ public class JourneyParser extends BaseParser<Object> {
     }
 
     Rule Description() {
-        return Sequence("Journey:", Whitespace(), Name());
+        return Sequence("Journey: ", Name());
     }
 
     Rule NewLine() {
         return Ch('\n');
     }
 
-    Rule Whitespace() {
-        return OneOrMore(AnyOf(" \t"));
-    }
-
-    Rule Step() {
-        return FirstOf(
-                GoTo(),
-                ClickOn(),
-                Type(),
-                Submit(),
-                Title(),
-                Text()
-
-        );
+    Rule Spacing() {
+        return OneOrMore(Whitespace());
     }
 
     Rule Text() {
         return Sequence(
-                "text of",
-                Whitespace(),
+                "text of ",
                 Quote(),
                 Chars(),
                 push(match()),
                 Quote(),
-                Whitespace(),
-                "should be",
-                Whitespace(),
+                " should be ",
                 Quote(),
                 Chars(),
                 push(dto.step(TextOfShouldBe.builder().selector((String) pop()).expectedText(match()).build())),
@@ -87,10 +69,7 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule Title() {
         return Sequence(
-                "title",
-                Whitespace(),
-                "should be",
-                Whitespace(),
+                "title should be ",
                 Quote(),
                 Chars(),
                 push(dto.step(TitleShouldBe.expectedTitle(match()))),
@@ -104,15 +83,12 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule Type() {
         return Sequence(
-                "type",
-                Whitespace(),
+                "type ",
                 Quote(),
                 Chars(),
                 push(match()),
                 Quote(),
-                Whitespace(),
-                "into",
-                Whitespace(),
+                " into ",
                 Quote(),
                 Chars(),
                 push(dto.step(Type.builder().text((String) pop()).selector(match()).build())),
@@ -122,8 +98,7 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule ClickOn() {
         return Sequence(
-                "click on",
-                Whitespace(),
+                "click on ",
                 Quote(),
                 Chars(),
                 push(dto.step(ClickOn.selector(match()))),
@@ -134,8 +109,7 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule GoTo() {
         return Sequence(
-                "go to",
-                Whitespace(),
+                "go to ",
                 Quote(),
                 Url(),
                 push(dto.step(GoTo.url(URI.create(match())))),
