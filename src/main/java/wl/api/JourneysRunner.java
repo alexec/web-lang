@@ -7,9 +7,12 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
 import wl.infrastructure.JourneyFactory;
 import wl.infrastructure.JourneyRunner;
+import wl.infrastructure.Resources;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +20,14 @@ import java.util.List;
 public class JourneysRunner extends ParentRunner<JourneyRunner> {
     private final List<JourneyRunner> children = new ArrayList<>();
 
-    public JourneysRunner(Class clazz) throws InitializationError, IOException {
+    public JourneysRunner(Class clazz) throws InitializationError, IOException, URISyntaxException {
         super(clazz);
 
         JourneyFactory journeyFactory = new JourneyFactory();
-        try (InputStream in = clazz.getResourceAsStream(clazz.getSimpleName() + ".journey")) {
-            children.add(new JourneyRunner(journeyFactory.create(in)));
+        for (URL url : Resources.getResources(clazz, u -> u.getPath().endsWith(".journey"))) {
+            try (InputStream in = url.openStream()) {
+                children.add(new JourneyRunner(journeyFactory.create(in)));
+            }
         }
     }
 
