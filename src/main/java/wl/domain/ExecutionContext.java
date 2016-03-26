@@ -9,7 +9,7 @@ import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 @Data
-public class ExecutionContext implements AutoCloseable {
+public class ExecutionContext {
     private final EventFiringWebDriver driver;
     @Getter
     private By lastBy;
@@ -24,8 +24,4 @@ public class ExecutionContext implements AutoCloseable {
         });
     }
 
-    @Override
-    public void close() {
-        driver.quit();
-    }
 }

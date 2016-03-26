@@ -2,6 +2,14 @@
 
 A domain specific language for automating and testing web applications.
 
+Inspired by Cucumber, but tailed completely for automating the testing of web applications.
+
+## Road-map
+
+* First-class page objects.
+* Full support for changing driver at runtime.
+
+## Resources
 
 * https://github.com/sirthias/parboiled/wiki
 * http://www.hascode.com/2014/01/creating-grammar-parsers-in-java-and-scala-with-parboiled/

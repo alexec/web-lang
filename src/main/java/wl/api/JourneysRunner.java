@@ -20,14 +20,24 @@ import java.util.List;
 public class JourneysRunner extends ParentRunner<JourneyRunner> {
     private final List<JourneyRunner> children = new ArrayList<>();
 
-    public JourneysRunner(Class clazz) throws InitializationError, IOException, URISyntaxException {
+    public JourneysRunner(Class<?> clazz) throws InitializationError, IOException, URISyntaxException {
         super(clazz);
 
         JourneyFactory journeyFactory = new JourneyFactory();
+        Object config = createConfig(clazz);
+
         for (URL url : Resources.getResources(clazz, u -> u.getPath().endsWith(".journey"))) {
             try (InputStream in = url.openStream()) {
-                children.add(new JourneyRunner(journeyFactory.create(in)));
+                children.add(new JourneyRunner(config, journeyFactory.create(in)));
             }
+        }
+    }
+
+    private Object createConfig(Class<?> clazz) throws InitializationError {
+        try {
+            return clazz.getAnnotation(ContextConfig.class).value().newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new InitializationError(e);
         }
     }
 
