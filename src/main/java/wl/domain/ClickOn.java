@@ -1,11 +1,13 @@
 package wl.domain;
 
 import lombok.Data;
+import lombok.NonNull;
 import org.openqa.selenium.By;
 
 
 @Data
 public class ClickOn implements Step {
+    @NonNull
     private final String selector;
 
     private ClickOn(String selector) {

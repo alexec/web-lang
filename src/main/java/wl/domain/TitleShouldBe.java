@@ -1,16 +1,22 @@
 package wl.domain;
 
 import lombok.Data;
+import lombok.NonNull;
 import org.openqa.selenium.WebDriver;
 
 import static org.junit.Assert.assertEquals;
 
 @Data
 public class TitleShouldBe implements Step {
+    @NonNull
     private final String expectedTitle;
 
     private TitleShouldBe(String expectedTitle) {
         this.expectedTitle = expectedTitle;
+    }
+
+    public static TitleShouldBe expectedTitle(String value) {
+        return new TitleShouldBe(value);
     }
 
     @Override
@@ -22,9 +28,5 @@ public class TitleShouldBe implements Step {
     @Override
     public String getDescription() {
         return String.format("title should be \"%s\"", expectedTitle);
-    }
-
-    public static TitleShouldBe expectedTitle(String value) {
-        return new TitleShouldBe(value);
     }
 }

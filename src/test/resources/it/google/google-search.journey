@@ -4,3 +4,4 @@ click on "input[name=q]"
 type "Cheese!" into "input[name=q]"
 submit
 title should be "Cheese! - Google Search"
+text of "input[name=q]" should be "Cheese!"
