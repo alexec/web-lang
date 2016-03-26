@@ -3,10 +3,7 @@ package wl.infrastructure;
 import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
-import wl.domain.ClickOn;
-import wl.domain.GoTo;
-import wl.domain.Journey;
-import wl.domain.Type;
+import wl.domain.*;
 
 import java.net.URI;
 
@@ -41,8 +38,13 @@ public class JourneyParser extends BaseParser<Object> {
         return FirstOf(
                 GoTo(),
                 ClickOn(),
-                Type()
+                Type(),
+                Submit()
         );
+    }
+
+    Rule Submit() {
+        return Sequence("submit", push(dto.step(Submit.INSTANCE)));
     }
 
     Rule Type() {

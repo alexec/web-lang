@@ -3,7 +3,6 @@ package wl.domain;
 import lombok.Builder;
 import lombok.Data;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 @Builder
 @Data
@@ -11,8 +10,8 @@ public class ClickOn implements Step {
     private String selector;
 
     @Override
-    public void execute(WebDriver driver) {
-        driver.findElement(By.cssSelector(selector)).click();
+    public void execute(ExecutionContext context) {
+        context.getDriver().findElement(By.cssSelector(selector)).click();
     }
 
     @Override

@@ -1,9 +1,7 @@
 package wl.domain;
 
-import org.openqa.selenium.WebDriver;
-
 public interface Step {
-    void execute(WebDriver driver);
+    void execute(ExecutionContext context);
 
     String getDescription();
 }

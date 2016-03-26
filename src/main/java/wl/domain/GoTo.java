@@ -2,7 +2,6 @@ package wl.domain;
 
 import lombok.Builder;
 import lombok.Data;
-import org.openqa.selenium.WebDriver;
 
 import java.net.URI;
 
@@ -12,8 +11,8 @@ public class GoTo implements Step {
     private URI url;
 
     @Override
-    public void execute(WebDriver driver) {
-        driver.get(url.toString());
+    public void execute(ExecutionContext context) {
+        context.getDriver().get(url.toString());
     }
 
     @Override

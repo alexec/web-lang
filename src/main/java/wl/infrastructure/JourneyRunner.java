@@ -1,11 +1,12 @@
 package wl.infrastructure;
 
 import org.junit.runner.Description;
+import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import wl.domain.ExecutionContext;
 import wl.domain.Journey;
 import wl.domain.Step;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class JourneyRunner extends ParentRunner<Step> {
 
     private final Journey journey;
-    private WebDriver driver;
+    private ExecutionContext context;
 
     public JourneyRunner(Journey journey) throws InitializationError {
         super(JourneyRunner.class);
@@ -40,11 +41,12 @@ public class JourneyRunner extends ParentRunner<Step> {
 
     @Override
     public void run(RunNotifier notifier) {
-        driver = new FirefoxDriver();
+        context = new ExecutionContext(new FirefoxDriver());
         try {
             super.run(notifier);
         } finally {
-            driver.quit();
+            context.close();
+            context = null;
         }
     }
 
@@ -53,7 +55,9 @@ public class JourneyRunner extends ParentRunner<Step> {
         Description description = describeChild(child);
         notifier.fireTestStarted(description);
         try {
-            child.execute(driver);
+            child.execute(context);
+        } catch (Throwable t) {
+            notifier.fireTestFailure(new Failure(description, t));
         } finally {
             notifier.fireTestFinished(description);
         }

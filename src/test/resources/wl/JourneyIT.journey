@@ -1,4 +1,5 @@
 Journey: "Searching on Google"
 go to "http://www.google.com"
-click on "input[name='q']"
-type "Cheese!" into "input[name='q']"
+click on "input[name=q]"
+type "Cheese!" into "input[name=q]"
+submit

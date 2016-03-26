@@ -1,10 +1,7 @@
 package wl;
 
 import org.junit.Test;
-import wl.domain.ClickOn;
-import wl.domain.GoTo;
-import wl.domain.Journey;
-import wl.domain.Type;
+import wl.domain.*;
 import wl.infrastructure.JourneyFactory;
 
 import java.net.URI;
@@ -23,8 +20,9 @@ public class JourneyTest {
                         .name("Searching on Google")
                         .steps(Arrays.asList(
                                 GoTo.builder().url(URI.create("http://www.google.com")).build(),
-                                ClickOn.builder().selector("#q").build(),
-                                Type.builder().selector("#q").text("Cheese!").build()
+                                ClickOn.builder().selector("input[name=q]").build(),
+                                Type.builder().selector("input[name=q]").text("Cheese!").build(),
+                                Submit.INSTANCE
                         ))
                         .build()
                 , journey);
