@@ -1,7 +1,6 @@
-package wl.domain;
+package wl.domain.step.interaction;
 
 import org.junit.Test;
-import wl.domain.step.interaction.Submit;
 
 import static org.junit.Assert.assertEquals;
 

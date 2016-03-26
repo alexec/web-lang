@@ -5,6 +5,7 @@ import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
 import wl.domain.JourneysBuilder;
 import wl.domain.step.examination.ShouldBeChecked;
+import wl.domain.step.examination.ShouldNotBeChecked;
 import wl.domain.step.examination.TextOfShouldBe;
 import wl.domain.step.examination.TitleShouldBe;
 import wl.domain.step.interaction.*;
@@ -20,7 +21,6 @@ public class JourneysParser extends BaseParser<Object> {
         return Sequence(
                 OneOrMore(
                         Sequence(
-                                Optional(Whitespace()),
                                 FirstOf(
                                         Description(),
                                         GoTo(),
@@ -30,8 +30,16 @@ public class JourneysParser extends BaseParser<Object> {
                                         Title(),
                                         Text(),
                                         Check(),
+                                        Uncheck(),
                                         ShouldBeChecked(),
-                                        EMPTY), Optional(Whitespace()), Optional(Comment()), NewLine())
+                                        ShouldNotBeChecked(),
+                                        EMPTY
+                                ),
+                                Optional(Whitespace()),
+                                Optional(Comment()),
+                                NewLine(),
+                                Optional(Whitespace())
+                        )
                 ),
                 EOI,
                 push(dto.build())
@@ -128,13 +136,35 @@ public class JourneysParser extends BaseParser<Object> {
         );
     }
 
+    Rule Uncheck() {
+        return Sequence(
+                "uncheck ",
+                Quote(),
+                Chars(),
+                push(dto.addStep(Uncheck.selector(match()))),
+                Quote()
+        );
+    }
+
     Rule ShouldBeChecked() {
         return Sequence(
                 Quote(),
                 Chars(),
-                push(dto.addStep(ShouldBeChecked.selector(match()))),
+                push(match()),
                 Quote(),
-                " should be checked"
+                " should be checked",
+                push(dto.addStep(ShouldBeChecked.selector((String) pop())))
+        );
+    }
+
+    Rule ShouldNotBeChecked() {
+        return Sequence(
+                Quote(),
+                Chars(),
+                push(match()),
+                Quote(),
+                " should not be checked",
+                push(dto.addStep(ShouldNotBeChecked.selector((String) pop())))
         );
     }
 

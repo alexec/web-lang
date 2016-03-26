@@ -1,11 +1,11 @@
 package it.google;
 
+import it.HtmlUnitConfig;
 import org.junit.runner.RunWith;
-import wl.FirefoxConfig;
 import wl.api.ContextConfig;
 import wl.api.JourneysRunner;
 
 @RunWith(JourneysRunner.class)
-@ContextConfig(FirefoxConfig.class)
+@ContextConfig(HtmlUnitConfig.class)
 public class GoogleIT {
 }

@@ -1,7 +1,7 @@
 package it.blog;
 
+import it.FirefoxConfig;
 import org.junit.runner.RunWith;
-import wl.FirefoxConfig;
 import wl.api.ContextConfig;
 import wl.api.JourneysRunner;
 

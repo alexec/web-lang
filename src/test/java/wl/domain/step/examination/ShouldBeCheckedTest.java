@@ -1,7 +1,6 @@
-package wl.domain;
+package wl.domain.step.examination;
 
 import org.junit.Test;
-import wl.domain.step.examination.ShouldBeChecked;
 
 import static org.junit.Assert.assertEquals;
 
