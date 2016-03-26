@@ -9,4 +9,5 @@ test:
     - find . -type f -regex ".*/target/.*-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
 general:
   artifacts:
+    - "target/pit-reports"
     - "target/screenshots"
