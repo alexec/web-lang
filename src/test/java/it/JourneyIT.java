@@ -1,4 +1,4 @@
-package wl.it;
+package it;
 
 import org.junit.runner.RunWith;
 import wl.FirefoxConfig;
