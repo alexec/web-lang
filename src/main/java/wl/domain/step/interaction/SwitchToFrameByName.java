@@ -8,7 +8,7 @@ import wl.domain.step.Step;
 @Data
 public class SwitchToFrameByName implements Step {
     @NonNull
-    private String name;
+    private final String name;
 
     public static SwitchToFrameByName name(String name) {
         return new SwitchToFrameByName(name);
@@ -21,6 +21,6 @@ public class SwitchToFrameByName implements Step {
 
     @Override
     public String getDescription() {
-        return "switch to frame \"name\"";
+        return "switch to frame \"" + name + "\"";
     }
 }

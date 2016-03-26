@@ -34,6 +34,7 @@ public class JourneysParser extends BaseParser<Object> {
                                         ExecuteScript(),
                                         DismissAlert(),
                                         SwitchToFrameByName(),
+                                        SwitchToFrameByIndex(),
                                         ShouldBeChecked(),
                                         ShouldNotBeChecked(),
                                         EMPTY
@@ -230,7 +231,13 @@ public class JourneysParser extends BaseParser<Object> {
         );
     }
 
-
+    Rule SwitchToFrameByIndex() {
+        return Sequence(
+                "switch to frame ",
+                Int(),
+                push(dto.addStep(SwitchToFrameByIndex.index(Integer.parseInt(match()))))
+        );
+    }
 
     Rule DismissAlert() {
         return Sequence(
@@ -239,13 +246,16 @@ public class JourneysParser extends BaseParser<Object> {
         );
     }
 
-
     Rule Url() {
         return Chars();
     }
 
     Rule Chars() {
         return OneOrMore(TestNot(NewLine()), TestNot(Quote()), ANY);
+    }
+
+    Rule Int() {
+        return OneOrMore(CharRange('0', '9'));
     }
 
     Rule Quote() {
