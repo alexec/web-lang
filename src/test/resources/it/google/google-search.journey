@@ -1,4 +1,7 @@
 Journey: "Searching on Google"
+
+# the standard Google search
+
 go to "http://www.google.com"
 click on "input[name=q]"
 type "Cheese!" into "input[name=q]"

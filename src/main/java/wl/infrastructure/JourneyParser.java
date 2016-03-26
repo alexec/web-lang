@@ -14,12 +14,33 @@ public class JourneyParser extends BaseParser<Object> {
 
     Rule Journey() {
         return Sequence(
-                Description(),
-                NewLine(),
-                ZeroOrMore(Sequence(Step(), NewLine())),
+                DescriptionLine(),
+                OneOrMore(
+                        FirstOf(StepLine(), CommentLine(), BlankLine())
+                ),
                 EOI,
                 push(dto.build())
         );
+    }
+
+    Rule DescriptionLine() {
+        return Sequence(Description(), NewLine());
+    }
+
+    Rule BlankLine() {
+        return NewLine();
+    }
+
+    Rule StepLine() {
+        return Sequence(Step(), NewLine());
+    }
+
+    Rule CommentLine() {
+        return Sequence(Comment(), NewLine());
+    }
+
+    Rule Comment() {
+        return Sequence("#", OneOrMore(TestNot(NewLine()), ANY));
     }
 
     Rule Description() {
@@ -42,6 +63,7 @@ public class JourneyParser extends BaseParser<Object> {
                 Submit(),
                 Title(),
                 Text()
+
         );
     }
 
