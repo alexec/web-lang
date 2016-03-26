@@ -7,10 +7,11 @@ Inspired by Cucumber, but tailed completely for automating the testing of web ap
 
 ## Road-map
 
-* Test coverage.
+* Frames.
+* Windows.
 * Clicking by link text.
 * Running a single test.
-* First-class page objectsi
+* First-class page objects.
 * Full support for changing driver at runtime.
 
 ## Resources
