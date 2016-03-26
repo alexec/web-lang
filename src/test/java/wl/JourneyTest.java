@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class JourneyTest {
 
-    private final Journey journey = new JourneyFactory().create(JourneyTest.class.getResourceAsStream("google-search.journey"));
+    private final Journey journey = new JourneyFactory().create(JourneyTest.class.getResourceAsStream("google/google-search.journey"));
 
     @Test
     public void example() throws Exception {
