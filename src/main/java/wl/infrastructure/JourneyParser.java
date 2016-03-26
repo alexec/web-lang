@@ -36,7 +36,7 @@ public class JourneyParser extends BaseParser<Object> {
     }
 
     Rule CommentLine() {
-        return Sequence(Comment(), NewLine());
+        return Sequence(Whitespace(), Comment(), NewLine());
     }
 
     Rule Comment() {
