@@ -1,12 +1,12 @@
-package wl;
+package wl.infrastructure;
 
 import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
-import wl.model.ClickOn;
-import wl.model.GoTo;
-import wl.model.Journey;
-import wl.model.Type;
+import wl.domain.ClickOn;
+import wl.domain.GoTo;
+import wl.domain.Journey;
+import wl.domain.Type;
 
 import java.net.URI;
 

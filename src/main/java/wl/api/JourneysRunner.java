@@ -1,10 +1,12 @@
-package wl;
+package wl.api;
 
 
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
+import wl.infrastructure.JourneyFactory;
+import wl.infrastructure.JourneyRunner;
 
 import java.io.IOException;
 import java.io.InputStream;

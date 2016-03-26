@@ -1,4 +1,4 @@
-package wl.model;
+package wl.domain;
 
 import lombok.Builder;
 import lombok.Data;

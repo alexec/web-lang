@@ -1,4 +1,4 @@
-package wl;
+package wl.infrastructure;
 
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -6,8 +6,8 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import wl.model.Journey;
-import wl.model.Step;
+import wl.domain.Journey;
+import wl.domain.Step;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class JourneyRunner extends ParentRunner<Step> {
     private final Journey journey;
     private WebDriver driver;
 
-    JourneyRunner(Journey journey) throws InitializationError {
+    public JourneyRunner(Journey journey) throws InitializationError {
         super(JourneyRunner.class);
         this.journey = journey;
     }

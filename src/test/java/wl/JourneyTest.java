@@ -1,10 +1,11 @@
 package wl;
 
 import org.junit.Test;
-import wl.model.ClickOn;
-import wl.model.GoTo;
-import wl.model.Journey;
-import wl.model.Type;
+import wl.domain.ClickOn;
+import wl.domain.GoTo;
+import wl.domain.Journey;
+import wl.domain.Type;
+import wl.infrastructure.JourneyFactory;
 
 import java.net.URI;
 import java.util.Arrays;

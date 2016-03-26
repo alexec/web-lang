@@ -1,4 +1,4 @@
-package wl.model;
+package wl.domain;
 
 import org.openqa.selenium.WebDriver;
 
