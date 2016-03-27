@@ -33,7 +33,12 @@ public class JourneysParser extends BaseParser<Object> {
                         FirstOf(
                                 UrlIs(),
                                 ElementIs(),
+                                TitleShouldBe(),
                                 TitleShouldContain(),
+                                TextShouldBe(),
+                                AttributeShouldBe(),
+                                ShouldBeChecked(),
+                                ShouldNotBeChecked(),
                                 EMPTY
                         ), LineTerminator()
                 )

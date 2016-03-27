@@ -1,3 +1,8 @@
+Page: "Docker Tags"
+
+    url is "http://www.alexecollins.com/tags/docker"
+    text of "h1:nth-child(2)" should be "ARTICLES TAGGED 'DOCKER'"
+
 Journey: "View blog posts"
 
     go to "http://www.alexecollins.com"
@@ -6,5 +11,5 @@ Journey: "View blog posts"
 
 Journey: "View Docker tags"
 
-    go to "http://www.alexecollins.com/tags/docker"
-    text of "h1:nth-child(2)" should be "ARTICLES TAGGED 'DOCKER'"
+    go to "Docker Tags"
+    page should be "Docker Tags"
