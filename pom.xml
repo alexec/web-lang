@@ -9,11 +9,11 @@
         <maven>3.0</maven>
     </prerequisites>
 
-    <groupId>web-app-testing-lang</groupId>
+    <groupId>web-lang</groupId>
     <artifactId>web-lang</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
-    <name>Web App Testing Lang</name>
+    <name>Web Application Testing Lang</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

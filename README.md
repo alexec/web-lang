@@ -1,5 +1,5 @@
 [![Circle CI](https://circleci.com/gh/alexec/web-lang.svg?style=svg)](https://circleci.com/gh/selenium-webdriver-in-practice/source)
-# Web Lang
+# Web Application Testing Lang
 
 A domain specific language for automating and testing web applications.
 
