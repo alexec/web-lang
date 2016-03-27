@@ -1,10 +1,20 @@
+Page: "Search"
+
+    url is "http://www.google.com"
+    element "query" is "input[name='q']"
+
+Page: "Results"
+
+    title should contain "Google Search"
+
 Journey: "Searching on Google"
 
     # the standard Google search
 
-    go to "http://www.google.com"
-    click on "input[name=q]"
-    type "Cheese!" into "input[name=q]"
+    go to "Search"
+    click on "@query"
+    type "Cheese!" into "@query"
     submit
+    page should be "Results"
     title should be "Cheese! - Google Search"
-    text of "input[name=q]" should be "Cheese!"
+    text of "@query" should be "Cheese!"

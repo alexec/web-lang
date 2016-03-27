@@ -6,6 +6,7 @@ import wl.domain.step.Step;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class Journey {
@@ -13,10 +14,8 @@ public class Journey {
     private final List<Step> steps = new ArrayList<>();
     @NonNull
     private final String name;
-
-    public Journey(String name) {
-        this.name = name;
-    }
+    @NonNull
+    private final Map<String, Page> pages;
 
     public String getName() {
         return name;
@@ -28,5 +27,9 @@ public class Journey {
 
     boolean addStep(Step step) {
         return steps.add(step);
+    }
+
+    public Map<String, Page> getPages() {
+        return pages;
     }
 }

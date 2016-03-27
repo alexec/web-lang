@@ -4,6 +4,7 @@ import org.parboiled.BaseParser;
 import org.parboiled.Rule;
 import org.parboiled.annotations.BuildParseTree;
 import wl.domain.JourneysBuilder;
+import wl.domain.Selector;
 import wl.domain.step.examination.*;
 import wl.domain.step.interaction.*;
 
@@ -18,10 +19,37 @@ public class JourneysParser extends BaseParser<Object> {
 
     Rule Journeys() {
         return Sequence(
+                ZeroOrMore(Page()),
                 OneOrMore(Journey()),
                 EOI,
                 push(dto.build())
         );
+    }
+
+    Rule Page() {
+        return Sequence(
+                PageDescription(), LineTerminator(),
+                ZeroOrMore(
+                        FirstOf(
+                                UrlIs(),
+                                ElementIs(),
+                                TitleShouldContain(),
+                                EMPTY
+                        ), LineTerminator()
+                )
+        );
+    }
+
+    Rule PageDescription() {
+        return Sequence("Page: ", QuStr(), push(dto.addPage((String) pop())));
+    }
+
+    Rule UrlIs() {
+        return Sequence("url is ", QuStr(), push((dto.setPageUrl(URI.create((String) pop())))));
+    }
+
+    Rule ElementIs() {
+        return Sequence("element ", QuStr(), " is ", QuStr(), push((dto.addPageElement((String) pop(), (String) pop()))));
     }
 
     Rule QuStr() {
@@ -57,7 +85,9 @@ public class JourneysParser extends BaseParser<Object> {
                                 SwitchToFrameByIndex(),
                                 SwitchToDefaultContent(),
                                 // inspections
+                                PageShouldBe(),
                                 TitleShouldBe(),
+                                TitleShouldContain(),
                                 TextShouldBe(),
                                 AttributeShouldBe(),
                                 ShouldBeChecked(),
@@ -87,13 +117,10 @@ public class JourneysParser extends BaseParser<Object> {
     Rule TextShouldBe() {
         return Sequence(
                 "text of ", QuStr(), " should be ", QuStr(),
-                push(dto.addStep(TextOfShouldBe.builder().expectedText((String) pop()).selector((String) pop()).build()))
+                push(dto.addStep(TextOfShouldBe.builder().expectedText((String) pop()).selector(Selector.valueOf((String) pop())).build()))
         );
     }
 
-    Rule TitleShouldBe() {
-        return Sequence("title should be ", QuStr(), push(dto.addStep(TitleShouldBe.expectedTitle((String) pop()))));
-    }
 
     Rule Submit() {
         return Sequence("submit", push(dto.addStep(Submit.INSTANCE)));
@@ -102,31 +129,43 @@ public class JourneysParser extends BaseParser<Object> {
     Rule Type() {
         return Sequence(
                 "type ", QuStr(), " into ", QuStr(),
-                push(dto.addStep(Type.builder().selector((String) pop()).text((String) pop()).build()))
+                push(dto.addStep(Type.builder().selector(Selector.valueOf((String) pop())).text((String) pop()).build()))
         );
     }
 
     Rule ClickOn() {
-        return Sequence("click on ", QuStr(), push(dto.addStep(ClickOn.selector((String) pop()))));
+        return Sequence("click on ", QuStr(), push(dto.addStep(ClickOn.selector(Selector.valueOf((String) pop())))));
     }
 
     Rule GoTo() {
-        return Sequence("go to ", QuStr(), push(dto.addStep(GoTo.url(URI.create((String) pop())))));
+        return Sequence("go to ", QuStr(), push(dto.addStep(GoTo.place((String) pop()))));
     }
 
     Rule Check() {
-        return Sequence("check ", QuStr(), push(dto.addStep(Check.selector((String) pop()))));
+        return Sequence("check ", QuStr(), push(dto.addStep(Check.selector(Selector.valueOf((String) pop())))));
     }
 
     Rule Uncheck() {
-        return Sequence("uncheck ", QuStr(), push(dto.addStep(Uncheck.selector((String) pop()))));
+        return Sequence("uncheck ", QuStr(), push(dto.addStep(Uncheck.selector(Selector.valueOf((String) pop())))));
     }
 
     Rule Select() {
         return Sequence(
                 "select ", QuStr(), " in ", QuStr(),
-                push(dto.addStep(Select.builder().selector((String) pop()).values(Collections.singletonList((String) pop())).build()))
+                push(dto.addStep(Select.builder().selector(Selector.valueOf((String) pop())).values(Collections.singletonList((String) pop())).build()))
         );
+    }
+
+    Rule PageShouldBe() {
+        return Sequence("page should be ", QuStr(), push(dto.addStep(PageShouldBe.expectedPage((String) pop()))));
+    }
+
+    Rule TitleShouldBe() {
+        return Sequence("title should be ", QuStr(), push(dto.addStep(TitleShouldBe.expectedTitle((String) pop()))));
+    }
+
+    Rule TitleShouldContain() {
+        return Sequence("title should contain ", QuStr(), push(dto.addStep(TitleShouldContain.expectedTitle((String) pop()))));
     }
 
     Rule AttributeShouldBe() {
@@ -134,18 +173,18 @@ public class JourneysParser extends BaseParser<Object> {
                 "attribute ", QuStr(), " of ", QuStr(), " should be ", QuStr(),
                 push(dto.addStep(AttributeShouldBe.builder()
                         .expectedValue((String) pop())
-                        .selector((String) pop())
+                        .selector(Selector.valueOf((String) pop()))
                         .attributeName((String) pop())
                         .build()))
         );
     }
 
     Rule ShouldBeChecked() {
-        return Sequence(QuStr(), " should be checked", push(dto.addStep(ShouldBeChecked.selector((String) pop()))));
+        return Sequence(QuStr(), " should be checked", push(dto.addStep(ShouldBeChecked.selector(Selector.valueOf((String) pop())))));
     }
 
     Rule ShouldNotBeChecked() {
-        return Sequence(QuStr(), " should not be checked", push(dto.addStep(ShouldNotBeChecked.selector((String) pop()))));
+        return Sequence(QuStr(), " should not be checked", push(dto.addStep(ShouldNotBeChecked.selector(Selector.valueOf((String) pop())))));
     }
 
     Rule ExecuteScript() {

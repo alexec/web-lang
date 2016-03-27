@@ -2,8 +2,8 @@ package wl.domain.step.examination;
 
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.By;
 import wl.domain.ExecutionContext;
+import wl.domain.Selector;
 import wl.domain.step.Step;
 
 import static org.junit.Assert.assertTrue;
@@ -11,19 +11,19 @@ import static org.junit.Assert.assertTrue;
 @Data
 public class ShouldBeChecked implements Step {
     @NonNull
-    private final String selector;
+    private final Selector selector;
 
-    private ShouldBeChecked(String selector) {
+    private ShouldBeChecked(Selector selector) {
         this.selector = selector;
     }
 
-    public static ShouldBeChecked selector(String selector) {
+    public static ShouldBeChecked selector(Selector selector) {
         return new ShouldBeChecked(selector);
     }
 
     @Override
     public void execute(ExecutionContext context) {
-        assertTrue(getDescription(), context.getDriver().findElement(By.cssSelector(selector)).isSelected());
+        assertTrue(getDescription(), context.getDriver().findElement(context.by(selector)).isSelected());
     }
 
     @Override

@@ -1,11 +1,12 @@
 package wl.domain.step.examination;
 
 import org.junit.Test;
+import wl.domain.step.Fixtures;
 
 import static org.junit.Assert.assertEquals;
 
 public class ShouldNotBeCheckedTest {
-    private final ShouldNotBeChecked shouldNotBeChecked = ShouldNotBeChecked.selector("selector");
+    private final ShouldNotBeChecked shouldNotBeChecked = ShouldNotBeChecked.selector(Fixtures.SELECTOR);
 
     @Test
     public void description() throws Exception {

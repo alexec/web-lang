@@ -2,13 +2,10 @@ package wl.domain.step.interaction;
 
 import org.junit.Test;
 
-import java.net.URI;
-
 import static org.junit.Assert.assertEquals;
 
 public class GoToTest {
-    private final String url = "http://dummy";
-    private final GoTo goTo = GoTo.url(URI.create(url));
+    private final GoTo goTo = GoTo.place("http://dummy");
 
     @Test
     public void description() throws Exception {

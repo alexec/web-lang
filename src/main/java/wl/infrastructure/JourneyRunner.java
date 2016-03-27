@@ -56,7 +56,7 @@ public class JourneyRunner extends ParentRunner<Step> {
 
         WebDriver driver = Beans.getBeanByType(config, WebDriver.class);
 
-        context = new ExecutionContext(driver);
+        context = new ExecutionContext(driver, journey.getPages());
         Beans.invokeMethodsByAnnotation(config, BeforeJourney.class, journey);
         try {
             super.run(notifier);
@@ -83,8 +83,14 @@ public class JourneyRunner extends ParentRunner<Step> {
 
     private void captureScreenshot(Description description) {
         TakesScreenshot takesScreenshot = (TakesScreenshot) context.getDriver();
-
-        Path file = takesScreenshot.getScreenshotAs(OutputType.FILE).toPath();
+        Path file;
+        try {
+            file = takesScreenshot.getScreenshotAs(OutputType.FILE).toPath();
+        } catch (UnsupportedOperationException e) {
+            //noinspection ThrowablePrintedToSystemOut
+            System.err.println(e);
+            return;
+        }
 
         Path screenshots = Paths.get("target", "screenshots");
         try {

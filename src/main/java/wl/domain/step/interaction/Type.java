@@ -3,8 +3,8 @@ package wl.domain.step.interaction;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.By;
 import wl.domain.ExecutionContext;
+import wl.domain.Selector;
 import wl.domain.step.Step;
 
 @Data
@@ -13,16 +13,16 @@ public class Type implements Step {
     @NonNull
     private final String text;
     @NonNull
-    private final String selector;
+    private final Selector selector;
 
-    private Type(String text, String selector) {
+    private Type(String text, Selector selector) {
         this.text = text;
         this.selector = selector;
     }
 
     @Override
     public void execute(ExecutionContext context) {
-        context.getDriver().findElement(By.cssSelector(selector)).sendKeys(text);
+        context.getDriver().findElement(context.by(selector)).sendKeys(text);
     }
 
     @Override

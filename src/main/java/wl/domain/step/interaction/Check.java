@@ -4,25 +4,26 @@ import lombok.Data;
 import lombok.NonNull;
 import org.openqa.selenium.By;
 import wl.domain.ExecutionContext;
+import wl.domain.Selector;
 import wl.domain.step.Step;
 
 @Data
 public class Check implements Step {
     @NonNull
-    private final String selector;
+    private final Selector selector;
 
-    private Check(String selector) {
+    private Check(Selector selector) {
         this.selector = selector;
     }
 
-    public static Check selector(String selector) {
+    public static Check selector(Selector selector) {
         return new Check(selector);
     }
 
     @Override
     public void execute(ExecutionContext context) {
-        By by = By.cssSelector(selector);
-        context.waitUntil(driver -> driver.findElement(by).isSelected(), driver -> driver.findElement(by).click());
+        By by = context.by(selector);
+        context.repeatUntil(driver -> driver.findElement(by).isSelected(), driver -> driver.findElement(by).click());
     }
 
     @Override

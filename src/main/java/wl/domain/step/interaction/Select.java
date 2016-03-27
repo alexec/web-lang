@@ -3,9 +3,9 @@ package wl.domain.step.interaction;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import wl.domain.ExecutionContext;
+import wl.domain.Selector;
 import wl.domain.step.Step;
 
 import java.util.List;
@@ -15,18 +15,18 @@ import java.util.stream.Collectors;
 @Data
 public class Select implements Step {
     @NonNull
-    private final String selector;
+    private final Selector selector;
     @NonNull
     private final List<String> values;
 
-    private Select(String selector, List<String> values) {
+    private Select(Selector selector, List<String> values) {
         this.selector = selector;
         this.values = values;
     }
 
     @Override
     public void execute(ExecutionContext context) {
-        WebElement element = context.getDriver().findElement(By.cssSelector(selector));
+        WebElement element = context.getDriver().findElement(context.by(selector));
 
         org.openqa.selenium.support.ui.Select select = new org.openqa.selenium.support.ui.Select(element);
 

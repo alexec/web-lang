@@ -2,27 +2,27 @@ package wl.domain.step.interaction;
 
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.By;
 import wl.domain.ExecutionContext;
+import wl.domain.Selector;
 import wl.domain.step.Step;
 
 
 @Data
 public class ClickOn implements Step {
     @NonNull
-    private final String selector;
+    private final Selector selector;
 
-    private ClickOn(String selector) {
+    private ClickOn(Selector selector) {
         this.selector = selector;
     }
 
-    public static ClickOn selector(String selector) {
+    public static ClickOn selector(Selector selector) {
         return new ClickOn(selector);
     }
 
     @Override
     public void execute(ExecutionContext context) {
-        context.getDriver().findElement(By.cssSelector(selector)).click();
+        context.getDriver().findElement(context.by(selector)).click();
     }
 
     @Override

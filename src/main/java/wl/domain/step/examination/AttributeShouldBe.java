@@ -3,8 +3,8 @@ package wl.domain.step.examination;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.By;
 import wl.domain.ExecutionContext;
+import wl.domain.Selector;
 import wl.domain.step.Step;
 
 import static org.junit.Assert.assertEquals;
@@ -13,11 +13,12 @@ import static org.junit.Assert.assertEquals;
 @Data
 public class AttributeShouldBe implements Step {
     @NonNull
-    private final String expectedValue, selector, attributeName;
+    private final String expectedValue, attributeName;
+    private final Selector selector;
 
     @Override
     public void execute(ExecutionContext context) {
-        assertEquals(getDescription(), expectedValue, context.getDriver().findElement(By.cssSelector(selector)).getAttribute(attributeName));
+        assertEquals(getDescription(), expectedValue, context.getDriver().findElement(context.by(selector)).getAttribute(attributeName));
     }
 
     @Override
