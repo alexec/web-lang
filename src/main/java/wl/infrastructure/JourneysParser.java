@@ -53,44 +53,32 @@ public class JourneysParser extends BaseParser<Object> {
         );
     }
 
+    Rule QuStr() {
+        return Sequence(
+                Quote(),
+                Chars(),
+                push(match()),
+                Quote()
+        );
+    }
+
     Rule Comment() {
         return Sequence("#", OneOrMore(TestNot(NewLine()), ANY));
     }
 
     Rule Description() {
-        return Sequence(
-                "Journey: ",
-                Quote(),
-                Chars(),
-                push(dto.addJourney(match())),
-                Quote()
-        );
+        return Sequence("Journey: ", QuStr(), push(dto.addJourney((String) pop())));
     }
-
 
     Rule Text() {
         return Sequence(
-                "text of ",
-                Quote(),
-                Chars(),
-                push(match()),
-                Quote(),
-                " should be ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(TextOfShouldBe.builder().selector((String) pop()).expectedText(match()).build())),
-                Quote()
+                "text of ", QuStr(), " should be ", QuStr(),
+                push(dto.addStep(TextOfShouldBe.builder().expectedText((String) pop()).selector((String) pop()).build()))
         );
     }
 
     Rule Title() {
-        return Sequence(
-                "title should be ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(TitleShouldBe.expectedTitle(match()))),
-                Quote()
-        );
+        return Sequence("title should be ", QuStr(), push(dto.addStep(TitleShouldBe.expectedTitle((String) pop()))));
     }
 
     Rule Submit() {
@@ -99,176 +87,77 @@ public class JourneysParser extends BaseParser<Object> {
 
     Rule Type() {
         return Sequence(
-                "type ",
-                Quote(),
-                Chars(),
-                push(match()),
-                Quote(),
-                " into ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(Type.builder().text((String) pop()).selector(match()).build())),
-                Quote()
+                "type ", QuStr(), " into ", QuStr(),
+                push(dto.addStep(Type.builder().selector((String) pop()).text((String) pop()).build()))
         );
     }
 
     Rule ClickOn() {
-        return Sequence(
-                "click on ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(ClickOn.selector(match()))),
-                Quote()
-
-        );
+        return Sequence("click on ", QuStr(), push(dto.addStep(ClickOn.selector((String) pop()))));
     }
 
     Rule GoTo() {
-        return Sequence(
-                "go to ",
-                Quote(),
-                Url(),
-                push(dto.addStep(GoTo.url(URI.create(match())))),
-                Quote()
-        );
+        return Sequence("go to ", QuStr(), push(dto.addStep(GoTo.url(URI.create((String) pop())))));
     }
 
     Rule Check() {
-        return Sequence(
-                "check ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(Check.selector(match()))),
-                Quote()
-        );
+        return Sequence("check ", QuStr(), push(dto.addStep(Check.selector((String) pop()))));
     }
 
     Rule Uncheck() {
-        return Sequence(
-                "uncheck ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(Uncheck.selector(match()))),
-                Quote()
-        );
+        return Sequence("uncheck ", QuStr(), push(dto.addStep(Uncheck.selector((String) pop()))));
     }
 
     Rule Select() {
         return Sequence(
-                "select ",
-                Quote(),
-                Chars(),
-                push(match()),
-                Quote(),
-                " in ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(Select.builder().values(Collections.singletonList((String) pop())).selector(match()).build())),
-                Quote()
+                "select ", QuStr(), " in ", QuStr(),
+                push(dto.addStep(Select.builder().selector((String) pop()).values(Collections.singletonList((String) pop())).build()))
         );
     }
 
     Rule Attribute() {
         return Sequence(
-                "attribute ",
-                Quote(),
-                Chars(),
-                push(match()),
-                Quote(),
-                " of ",
-                Quote(),
-                Chars(),
-                push(match()),
-                Quote(),
-                " should be ",
-                Quote(),
-                Chars(),
+                "attribute ", QuStr(), " of ", QuStr(), " should be ", QuStr(),
                 push(dto.addStep(AttributeShouldBe.builder()
-                        .expectedValue(match())
+                        .expectedValue((String) pop())
                         .selector((String) pop())
                         .attributeName((String) pop())
-                        .build())),
-                Quote()
+                        .build()))
         );
     }
 
     Rule ShouldBeChecked() {
-        return Sequence(
-                Quote(),
-                Chars(),
-                push(match()),
-                Quote(),
-                " should be checked",
-                push(dto.addStep(ShouldBeChecked.selector((String) pop())))
-        );
+        return Sequence(QuStr(), " should be checked", push(dto.addStep(ShouldBeChecked.selector((String) pop()))));
     }
 
     Rule ShouldNotBeChecked() {
-        return Sequence(
-                Quote(),
-                Chars(),
-                push(match()),
-                Quote(),
-                " should not be checked",
-                push(dto.addStep(ShouldNotBeChecked.selector((String) pop())))
-        );
+        return Sequence(QuStr(), " should not be checked", push(dto.addStep(ShouldNotBeChecked.selector((String) pop()))));
     }
 
     Rule ExecuteScript() {
-        return Sequence(
-                "execute script ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(ExecuteScript.script(match()))),
-                Quote()
-        );
+        return Sequence("execute script ", QuStr(), push(dto.addStep(ExecuteScript.script((String) pop()))));
     }
 
     Rule SwitchToFrameByName() {
-        return Sequence(
-                "switch to frame ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(SwitchToFrameByName.name(match()))),
-                Quote()
-        );
+        return Sequence("switch to frame ", QuStr(), push(dto.addStep(SwitchToFrameByName.name((String) pop()))));
     }
 
     Rule SwitchToFrameByIndex() {
-        return Sequence(
-                "switch to frame ",
-                Int(),
-                push(dto.addStep(SwitchToFrameByIndex.index(Integer.parseInt(match()))))
-        );
+        return Sequence("switch to frame ", Int(), push(dto.addStep(SwitchToFrameByIndex.index(Integer.parseInt(match())))));
     }
 
     Rule SwitchToDefaultContent() {
-        return Sequence(
-                "switch to default content",
-                push(dto.addStep(SwitchToDefaultContent.INSTANCE))
-        );
+        return Sequence("switch to default content", push(dto.addStep(SwitchToDefaultContent.INSTANCE)));
     }
 
     Rule DismissAlert() {
-        return Sequence(
-                "dismiss alert",
-                push(dto.addStep(DismissAlert.INSTANCE))
-        );
+        return Sequence("dismiss alert", push(dto.addStep(DismissAlert.INSTANCE)));
     }
 
     Rule CaptureTo() {
-        return Sequence(
-                "capture to ",
-                Quote(),
-                Chars(),
-                push(dto.addStep(Capture.to(Paths.get(match())))),
-                Quote()
-        );
+        return Sequence("capture to ", QuStr(), push(dto.addStep(Capture.to(Paths.get((String) pop())))));
     }
 
-    Rule Url() {
-        return Chars();
-    }
 
     Rule Chars() {
         return OneOrMore(TestNot(NewLine()), TestNot(Quote()), ANY);
