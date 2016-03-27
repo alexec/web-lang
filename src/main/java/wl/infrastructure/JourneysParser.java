@@ -18,36 +18,7 @@ public class JourneysParser extends BaseParser<Object> {
 
     Rule Journeys() {
         return Sequence(
-                OneOrMore(
-                        Sequence(
-                                FirstOf(
-                                        Description(),
-                                        GoTo(),
-                                        ClickOn(),
-                                        Type(),
-                                        Submit(),
-                                        Title(),
-                                        Text(),
-                                        Check(),
-                                        Uncheck(),
-                                        Select(),
-                                        Attribute(),
-                                        ExecuteScript(),
-                                        DismissAlert(),
-                                        SwitchToFrameByName(),
-                                        SwitchToFrameByIndex(),
-                                        SwitchToDefaultContent(),
-                                        ShouldBeChecked(),
-                                        ShouldNotBeChecked(),
-                                        CaptureTo(),
-                                        EMPTY
-                                ),
-                                Optional(Whitespace()),
-                                Optional(Comment()),
-                                NewLine(),
-                                Optional(Whitespace())
-                        )
-                ),
+                OneOrMore(Journey()),
                 EOI,
                 push(dto.build())
         );
@@ -66,18 +37,61 @@ public class JourneysParser extends BaseParser<Object> {
         return Sequence("#", OneOrMore(TestNot(NewLine()), ANY));
     }
 
-    Rule Description() {
+    Rule Journey() {
+        return Sequence(
+                JourneyDescription(),
+                LineTerminator(),
+                OneOrMore(
+                        FirstOf(
+                                // interactions
+                                GoTo(),
+                                ClickOn(),
+                                Type(),
+                                Submit(),
+                                Check(),
+                                Uncheck(),
+                                Select(),
+                                ExecuteScript(),
+                                DismissAlert(),
+                                SwitchToFrameByName(),
+                                SwitchToFrameByIndex(),
+                                SwitchToDefaultContent(),
+                                // inspections
+                                TitleShouldBe(),
+                                TextShouldBe(),
+                                AttributeShouldBe(),
+                                ShouldBeChecked(),
+                                ShouldNotBeChecked(),
+                                // misc
+                                CaptureTo(),
+                                EMPTY
+                        ),
+                        LineTerminator()
+                )
+        );
+    }
+
+    Rule LineTerminator() {
+        return Sequence(
+                Whitespace(),
+                Optional(Comment()),
+                NewLine(),
+                Whitespace()
+        );
+    }
+
+    Rule JourneyDescription() {
         return Sequence("Journey: ", QuStr(), push(dto.addJourney((String) pop())));
     }
 
-    Rule Text() {
+    Rule TextShouldBe() {
         return Sequence(
                 "text of ", QuStr(), " should be ", QuStr(),
                 push(dto.addStep(TextOfShouldBe.builder().expectedText((String) pop()).selector((String) pop()).build()))
         );
     }
 
-    Rule Title() {
+    Rule TitleShouldBe() {
         return Sequence("title should be ", QuStr(), push(dto.addStep(TitleShouldBe.expectedTitle((String) pop()))));
     }
 
@@ -115,7 +129,7 @@ public class JourneysParser extends BaseParser<Object> {
         );
     }
 
-    Rule Attribute() {
+    Rule AttributeShouldBe() {
         return Sequence(
                 "attribute ", QuStr(), " of ", QuStr(), " should be ", QuStr(),
                 push(dto.addStep(AttributeShouldBe.builder()
