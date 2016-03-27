@@ -64,6 +64,13 @@ You can run a group of tests to those just containing a string:
 mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 ~~~
 
+![Google Search](src/docs/images/google-search.png)
+![Capture](src/docs/images/capture.png)
+![Check-boxes](src/docs/images/check-boxes.png)
+![Radio-buttons](src/docs/images/radio-buttons.png)
+![Frames](src/docs/images/frames.png)
+![JavaScript](src/docs/images/javascript.png)
+
 ## Road-map
 
 * Windows.
