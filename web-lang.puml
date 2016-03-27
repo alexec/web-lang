@@ -1,26 +1,37 @@
 @startuml
 
-abstract class AbstractList
-    abstract AbstractCollection
+Journey : String name
+Journey "1" --> "*" Page
+Journey "1" --> "1..*" Step
+
+Page : String name
+Page : URL url
+Page "1" -->  "*" Step: checks
+
 interface Step
-interface Collection
 
-List <|-- AbstractList
-Collection <|-- AbstractCollection
+Step : void execute(ExecutionContext)
+Step : String getDescription()
 
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
+Step <|-- GoTo
+Step <|-- ClickOn
+Step <|-- AttributeShouldBe
+Step <|-- Check
+Step <|-- ExecuteScript
 
-class ArrayList {
-Object[] elementData
-size()
-}
+Selector : String value
+GoTo : String place
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
+ClickOn *-- Selector
+AttributeShouldBe : String attributeName
+AttributeShouldBe : String expectedValue
+AttributeShouldBe *-- Selector
+Check *-- Selector
+
+ExecuteScript : String script
+
+ExecutionContext : WebDriver getDriver()
+ExecutionContext .. Step
+ExecutionContext "*" --> "*" Page
 
 @enduml
