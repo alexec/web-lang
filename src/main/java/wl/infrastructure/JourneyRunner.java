@@ -1,5 +1,6 @@
 package wl.infrastructure;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
@@ -22,8 +23,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-// https://github.com/cucumber/cucumber-jvm/blob/master/junit/src/main/java/cucumber/runtime/junit/FeatureRunner.java
-// https://github.com/cucumber/cucumber-jvm/blob/20db608a5535850139ba25fcdb9be3ae46991855/junit/src/main/java/cucumber/runtime/junit/ExecutionUnitRunner.java
+@Slf4j
 public class JourneyRunner extends ParentRunner<Step> {
 
     private final Object config;
@@ -88,7 +88,7 @@ public class JourneyRunner extends ParentRunner<Step> {
             file = takesScreenshot.getScreenshotAs(OutputType.FILE).toPath();
         } catch (UnsupportedOperationException e) {
             //noinspection ThrowablePrintedToSystemOut
-            System.err.println(e);
+            log.error("failed to take screenshot: " + e.getMessage());
             return;
         }
 
@@ -98,7 +98,7 @@ public class JourneyRunner extends ParentRunner<Step> {
                 Files.createDirectory(screenshots);
             }
             Path dest = screenshots.resolve(description + ".png");
-            System.out.println("captured " + dest);
+            log.debug("captured " + dest);
             Files.move(file, dest, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new IllegalStateException("failed to capture screenshot", e);

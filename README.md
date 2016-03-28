@@ -149,3 +149,5 @@ By default, selectors are CSS (as these are fast and versatile). If you want to 
 * http://selenide.org
 * http://www.gebish.org
 * http://www.scalatest.org/user_guide/using_selenium
+* https://github.com/cucumber/cucumber-jvm/blob/master/junit/src/main/java/cucumber/runtime/junit/FeatureRunner.java
+* https://github.com/cucumber/cucumber-jvm/blob/20db608a5535850139ba25fcdb9be3ae46991855/junit/src/main/java/cucumber/runtime/junit/ExecutionUnitRunner.java
