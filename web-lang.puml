@@ -1,37 +1,85 @@
 @startuml
 
 Journey : String name
-Journey "1" --> "*" Page
-Journey "1" --> "1..*" Step
+Journey "1" --> "*" Page : pages
+Journey "1" --> "1..*" Step : steps
+Journey "0.." --> "*" Journey: background
 
 Page : String name
 Page : URL url
 Page "1" -->  "*" Step: checks
+Page "1" --> "*" Selector : {name}
 
 interface Step
 
 Step : void execute(ExecutionContext)
 Step : String getDescription()
 
-Step <|-- GoTo
-Step <|-- ClickOn
-Step <|-- AttributeShouldBe
-Step <|-- Check
-Step <|-- ExecuteScript
+Check --|> Step
+Check *-- Selector
 
-Selector : String value
+ClickOn  --|> Step
+ClickOn *-- Selector
+
+DismissAlert --|> Step
+
+ExecuteScript --|> Step
+ExecuteScript : String script
+
+GoTo --|> Step
 GoTo : String place
 
-ClickOn *-- Selector
+Select --|> Step
+Select *-- Selector
+Select : String value
+
+Submit --|> Step
+
+SwitchToDefaultContent --|> Step
+
+SwitchToFrameByIndex--|> Step
+SwitchToFrameByIndex : int index
+
+StepSwitchToFrameByName --|> Step
+StepSwitchToFrameByName : String frameName
+
+Type --|> Step
+Type : String text
+
+Uncheck --|> Step
+Uncheck *-- Selector
+
+AttributeShouldBe --|> Step
 AttributeShouldBe : String attributeName
 AttributeShouldBe : String expectedValue
 AttributeShouldBe *-- Selector
-Check *-- Selector
 
-ExecuteScript : String script
+Capture --|> Step
 
-ExecutionContext : WebDriver getDriver()
-ExecutionContext .. Step
-ExecutionContext "*" --> "*" Page
+TitleShouldBe --|> Step
+TitleShouldBe : String expectedTitle
+
+PageShouldBe --|> Step
+PageShouldBe --> Page
+
+ShouldBeChecked --|> Step
+ShouldBeChecked *-- Selector
+
+ShouldNotBeChecked --|> Step
+ShouldNotBeChecked *-- Selector
+
+TextOfShouldBe --|> Step
+TextOfShouldBe *-- Selector
+TextOfShouldBe : String expectedText
+
+TitleShouldBe --|> Step
+TitleShouldBe : String expectedTitle
+
+TitleShouldContain --|> Step
+TitleShouldContain : String value
+
+Selector : String value
+Selector : boolean isTargetName()
+
 
 @enduml
