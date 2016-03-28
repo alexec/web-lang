@@ -42,16 +42,21 @@ public class SelectorTest {
 
     @Test
     public void validById() throws Exception {
-        assertEquals(By.id("myId"), Selector.valueOf("id:myId").toBy());
+        assertEquals(By.id("foo"), Selector.valueOf("id:foo").toBy());
     }
 
     @Test
     public void validByLinkText() throws Exception {
-        assertEquals(By.linkText("myLinkText"), Selector.valueOf("linkText:myLinkText").toBy());
+        assertEquals(By.linkText("foo"), Selector.valueOf("linkText:foo").toBy());
     }
 
     @Test
     public void validPartialLinkText() throws Exception {
-        assertEquals(By.partialLinkText("myPartialLinkText"), Selector.valueOf("partialLinkText:myPartialLinkText").toBy());
+        assertEquals(By.partialLinkText("foo"), Selector.valueOf("partialLinkText:foo").toBy());
+    }
+
+    @Test
+    public void validName() throws Exception {
+        assertEquals(By.name("foo"), Selector.valueOf("name:foo").toBy());
     }
 }

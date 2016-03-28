@@ -30,7 +30,8 @@ public class Selector {
         return value.startsWith("id:") ? By.id(value.substring(3)) :
                 value.startsWith("linkText:") ? By.linkText(value.substring(9)) :
                         value.startsWith("partialLinkText:") ? By.partialLinkText(value.substring(16)) :
-                                By.cssSelector(value);
+                                value.startsWith("name:") ? By.name(value.substring(5)) :
+                                        By.cssSelector(value);
     }
 
     @Override

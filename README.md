@@ -118,11 +118,12 @@ You can find more examples under [src/test/resources/it](src/test/resources/it).
 
 By default, selectors are CSS (as these are fast and versatile). If you want to use a specific selector:
 
-| Example                             | As CSS             | Description           |
-|----------------------------------------------------------|-----------------------|
-| `id:myId`                           | `#myId`            | By ID.                |
-| `linkText:myLinkText`               | N/A                | By link text.         |
-| `partialLinkText:myPartialLinkText` | N/A                | By partial link text. |
+| Example               | As CSS             | Description           |
+|--------------------------------------------|-----------------------|
+| `id:foo`              | `#myId`            | By ID.                |
+| `linkText:foo`        | N/A                | By link text.         |
+| `partialLinkText:foo` | N/A                | By partial link text. |
+| `name:foo`            | `*[name='foo']`    | By name.              |
 
 ## Road-map
 
