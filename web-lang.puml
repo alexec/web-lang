@@ -3,7 +3,9 @@
 Journey : String name
 Journey "1" --> "*" Page : pages
 Journey "1" --> "1..*" Step : steps
-Journey "0.." --> "*" Journey: background
+Journey "0.." --> "*" Background
+
+Background --> Journey
 
 Page : String name
 Page : URL url

@@ -7,6 +7,7 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
 import wl.domain.Journey;
 import wl.infrastructure.JourneyFactory;
+import wl.infrastructure.JourneyParsingException;
 import wl.infrastructure.JourneyRunner;
 import wl.infrastructure.Resources;
 
@@ -19,6 +20,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.LinkedList;
 import java.util.List;
 
 // https://github.com/cucumber/cucumber-jvm/blob/master/junit/src/main/java/cucumber/api/junit/Cucumber.java
@@ -27,7 +29,7 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
     private final List<JourneyRunner> children = new ArrayList<>();
     private final JourneyFactory journeyFactory = new JourneyFactory();
     private final Object config;
-    private final String journeyName = System.getProperty("wl.journey", "");
+    private final String journeyNameFilter = System.getProperty("wl.journey", "");
 
     public JourneysRunner(Class<?> clazz) throws InitializationError, IOException, URISyntaxException {
         super(clazz);
@@ -46,41 +48,45 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
         }
     }
 
-    private void addChildrenFromClassPath(Class<?> clazz) throws IOException, URISyntaxException, InitializationError {
+    private void addChildrenFromClassPath(Class<?> clazz) throws InitializationError, IOException, URISyntaxException {
         for (URL url : Resources.getResources(clazz, u -> u.getPath().endsWith(PATH_SUFFIX))) {
             try (InputStream in = url.openStream()) {
                 for (Journey journey : journeyFactory.create(in)) {
-                    if (journey.getName().contains(journeyName)) {
+                    if (journey.getName().contains(journeyNameFilter)) {
                         children.add(new JourneyRunner(config, journey));
                     }
                 }
-            } catch (IllegalStateException e) {
+            } catch (JourneyParsingException | IOException e) {
                 throw new InitializationError("cannot parse " + url + " due to " + e.getMessage());
             }
         }
     }
 
-    private void addChildrenFromPath(Path path) throws IOException {
+    private void addChildrenFromPath(Path path) throws InitializationError, IOException {
+        List<Path> paths = new LinkedList<>();
         Files.walkFileTree(path, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE, new SimpleFileVisitor<Path>() {
             @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (file.toString().endsWith(PATH_SUFFIX)) {
-                    try (FileInputStream in = new FileInputStream(file.toFile())) {
-                        for (Journey journey : journeyFactory.create(in)) {
-                            if (journey.getName().contains(journeyName)) {
-                                try {
-                                    children.add(new JourneyRunner(config, journey));
-                                } catch (InitializationError e) {
-                                    throw new IllegalStateException(e);
-                                }
-                            }
-                        }
+            public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+                if (path.toString().endsWith(PATH_SUFFIX)) {
+                    paths.add(path);
+                }
+                return super.visitFile(path, attrs);
+            }
+        });
+
+        for (Path journeyPath : paths) {
+            try (FileInputStream in = new FileInputStream(journeyPath.toFile())) {
+                for (Journey journey : journeyFactory.create(in)) {
+                    if (journey.getName().contains(journeyNameFilter)) {
+                        children.add(new JourneyRunner(config, journey));
                     }
                 }
-                return super.visitFile(file, attrs);
+            } catch (JourneyParsingException e) {
+                throw new InitializationError("cannot parse " + path + " due to  " + e.getMessage());
             }
+        }
 
-        });
+
     }
 
     private Object createConfig(Class<?> clazz) throws InitializationError {

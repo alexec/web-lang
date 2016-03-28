@@ -6,7 +6,7 @@ import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 @Data
 public class ShouldNotBeChecked implements Step {
@@ -23,7 +23,8 @@ public class ShouldNotBeChecked implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        assertTrue(getDescription(), !context.getDriver().findElement(context.by(selector)).isSelected());
+        boolean checked = context.getDriver().findElement(context.by(selector)).isSelected();
+        assertFalse(getDescription(), checked);
     }
 
     @Override

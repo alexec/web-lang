@@ -74,6 +74,9 @@ public class JourneysParser extends BaseParser<Object> {
         return Sequence(
                 JourneyDescription(),
                 LineTerminator(),
+                Optional(EMPTY, LineTerminator()),
+                Optional(Sequence(Background(), LineTerminator())),
+                Optional(EMPTY, LineTerminator()),
                 OneOrMore(
                         FirstOf(
                                 // interactions
@@ -106,6 +109,7 @@ public class JourneysParser extends BaseParser<Object> {
         );
     }
 
+
     Rule LineTerminator() {
         return Sequence(
                 Whitespace(),
@@ -117,6 +121,10 @@ public class JourneysParser extends BaseParser<Object> {
 
     Rule JourneyDescription() {
         return Sequence("Journey: ", QuStr(), push(dto.addJourney((String) pop())));
+    }
+
+    Rule Background() {
+        return Sequence("Background: ", QuStr(), push(dto.setBackground((String) pop())));
     }
 
     Rule TextShouldBe() {

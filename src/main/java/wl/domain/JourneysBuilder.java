@@ -3,10 +3,7 @@ package wl.domain;
 import wl.domain.step.Step;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JourneysBuilder {
     private final List<Journey> journeys = new LinkedList<>();
@@ -22,11 +19,15 @@ public class JourneysBuilder {
 
     public JourneysBuilder addStep(Step step) {
         if (last instanceof Journey) {
-            ((Journey) last).addStep(step);
+            lastJourney().addStep(step);
         } else {
-            (lastPage()).addStep(step);
+            lastPage().addStep(step);
         }
         return this;
+    }
+
+    private Journey lastJourney() {
+        return (Journey) last;
     }
 
     public List<Journey> build() {
@@ -51,6 +52,15 @@ public class JourneysBuilder {
 
     public JourneysBuilder addPageElement(String selector, String name) {
         lastPage().addPageElement(selector, name);
+        return this;
+    }
+
+    public JourneysBuilder setBackground(String journeyName) {
+        Optional<Journey> journey = journeys.stream().filter(j -> j.getName().equals(journeyName)).findFirst();
+        if (!journey.isPresent()) {
+            throw new IllegalStateException(String.format("cannot find journey name \"%s\"", journeyName));
+        }
+        lastJourney().setBackground(new Background(journey.get()));
         return this;
     }
 }

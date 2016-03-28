@@ -23,7 +23,8 @@ public class ShouldBeChecked implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        assertTrue(getDescription(), context.getDriver().findElement(context.by(selector)).isSelected());
+        boolean checked = context.getDriver().findElement(context.by(selector)).isSelected();
+        assertTrue(getDescription(), checked);
     }
 
     @Override

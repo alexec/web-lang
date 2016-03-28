@@ -1,0 +1,25 @@
+Page: "Search"
+
+    url is "http://www.google.com"
+    element "query" is "input[name='q']"
+
+Page: "Results"
+
+    title should contain "Google Search"
+
+Journey: "Open Search Page"
+
+    go to "Search"
+
+Journey: "Searching on Google"
+
+    Background: "Open Search Page"
+
+    # if a selector starts with "@" then it is an alias to an element on the current page
+    click on "@query"
+    type "Cheese!" into "@query"
+    submit
+    # this checks the pages is the page you expect
+    page should be "Results"
+    title should be "Cheese! - Google Search"
+    text of "@query" should be "Cheese!"

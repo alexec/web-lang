@@ -9,6 +9,7 @@ import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -47,6 +48,7 @@ public class ExecutionContext {
     }
 
     private By targetToBy(Selector selector) {
+        Objects.requireNonNull(currentPage);
         String cssSelector = currentPage.getElements().get(selector.toTargetName());
         if (cssSelector == null) {
             throw new IllegalStateException(String.format("target \"%s\" not found on page \"%s\"", selector, currentPage.getName()));

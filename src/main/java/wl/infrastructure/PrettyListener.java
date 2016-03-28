@@ -44,7 +44,7 @@ public class PrettyListener extends RunListener {
     @Override
     public void testFinished(Description description) {
         if (failure != null) {
-            out.printf("%sFAIL %s%s", ANSI_RED, ANSI_RESET, failure.getMessage().replaceAll("\n.*", ""));
+            out.printf("%sFAIL %s%s", ANSI_RED, ANSI_RESET, failure.getMessage().replaceAll("\n", ", "));
         } else {
             out.printf("%sPASS%s", ANSI_GREEN, ANSI_RESET);
         }

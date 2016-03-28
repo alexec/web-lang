@@ -12,17 +12,17 @@ import java.util.Scanner;
 
 public class JourneyFactory {
 
-    private List<Journey> create(String text) {
+    private List<Journey> create(String text) throws JourneyParsingException {
         JourneysParser parser = Parboiled.createParser(JourneysParser.class);
         RecoveringParseRunner<List<Journey>> runner = new RecoveringParseRunner<>(parser.Journeys());
         ParsingResult<List<Journey>> result = runner.run(text);
         if (result.hasErrors()) {
-            throw new IllegalStateException(ErrorUtils.printParseErrors(result));
+            throw new JourneyParsingException(ErrorUtils.printParseErrors(result));
         }
         return result.resultValue;
     }
 
-    public List<Journey> create(InputStream in) {
+    public List<Journey> create(InputStream in) throws JourneyParsingException {
         return create(new Scanner(in).useDelimiter("\\A").next());
     }
 }

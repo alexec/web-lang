@@ -20,8 +20,9 @@ public class PageShouldBe implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        context.getPage(pageName).getSteps().stream()
-                .forEach(step -> step.execute(context));
+        for (Step step : context.getPage(pageName).getSteps()) {
+            step.execute(context);
+        }
     }
 
     @Override

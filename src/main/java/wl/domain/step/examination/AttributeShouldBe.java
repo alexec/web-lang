@@ -18,7 +18,8 @@ public class AttributeShouldBe implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        assertEquals(getDescription(), expectedValue, context.getDriver().findElement(context.by(selector)).getAttribute(attributeName));
+        String value = context.getDriver().findElement(context.by(selector)).getAttribute(attributeName);
+        assertEquals(getDescription(), expectedValue, value);
     }
 
     @Override
