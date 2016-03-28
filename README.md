@@ -59,7 +59,7 @@ Journey: "Searching on Google"
 
 **Page Objects** are a first-class concept, the above journey could be written as follows:
 
-~~~scala
+~~~ruby
 Page: "Search"
 
     url is "http://www.google.com"
@@ -87,23 +87,23 @@ Journey: "Searching on Google"
     text of "@query" should be "Cheese!"
 ~~~
 
+If you only want to run some journeys:
 
-You can run a group of tests to those just containing a string:
-
-~~~shell
+~~~ruby
 mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 ~~~
 
-You can find more examples under [src/test/resources/it](src/test/resounces/it).
+You can find more examples under [src/test/resources/it](src/test/resources/it).
 
-| Example                     | Description          |
-|-----------------------------|----------------------|
-| `capture to "filename.png"` | Capture a screenshot |
-|                             |                      |
-|                             |                      |
+| Example                                                                                                                                            | Description                                            |
+|----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|
+| `capture to "filename.png"`                                                                                                                        | Capture a screenshot                                   |
+| `attribute "id" of "#footer" should be "footer"`                                                                                                   | Check an attribute's value.                            |
+| `select "Olives" in "select[name='ingredients[]']" attribute "selected" of "select[name='ingredients[]'] option[value='Olives']" should be "true"` | Set a select list value, then check it's value is set. |
 
 ## Road-map
 
+* Support for all locators.
 * Windows.
 * Prompts.
 * Confirm.
