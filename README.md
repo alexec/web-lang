@@ -130,7 +130,6 @@ By default, selectors are CSS (as these are fast and versatile). If you want to 
 
 ## Road-map
 
-* Support for all locators.
 * Standalone run.
 * Windows.
 * Prompts.
