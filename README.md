@@ -28,8 +28,10 @@ Journey: "Searching on Google"
     text of "input[name=q]" should be "Cheese!"
 ~~~
 
+Then, to run this test:
+
 ~~~shell
-~/web-lang $ java -Dwl.browser=firefox -Dwl.path=src/test/resources/it/google/google-search.journey -jar ~/.m2/reposito/web-lang/web-lang/1.0.0-SNAPSHOT/web-lang-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+~/web-lang $ java -Dwl.browser=firefox -Dwl.path=google-search.journey -jar ~/.m2/reposito/web-lang/web-lang/1.0.0-SNAPSHOT/web-lang-1.0.0-SNAPSHOT-jar-with-dependencies.jar
 Journey: Searching on Google
 	go to "http://www.google.com" ... PASS
 	click on "input[name='q']" ... PASS
