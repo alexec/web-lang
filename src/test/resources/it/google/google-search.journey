@@ -1,25 +1,8 @@
-Page: "Search"
-
-    url is "http://www.google.com"
-
-    # you can define elements that are on the page for resuse
-
-    element "query" is "input[name='q']"
-
-Page: "Results"
-
-    # you can have rules that are used to check the page is what you expect
-
-    title should contain "Google Search"
-
 Journey: "Searching on Google"
 
-    go to "Search"
-    # if a selector starts with "@" then it is an alias to an element on the current page
-    click on "@query"
-    type "Cheese!" into "@query"
+    go to "http://www.google.com"
+    click on "input[name='q']"
+    type "Cheese!" into "input[name='q']"
     submit
-    # this checks the pages is the page you expect
-    page should be "Results"
     title should be "Cheese! - Google Search"
-    text of "@query" should be "Cheese!"
+    text of "input[name='q']" should be "Cheese!"

@@ -12,11 +12,11 @@ abstract class AbstractConfig {
 
     @BeforeJourney
     public void beforeJourney(Journey journey) {
-        log.info("journey \"%s\" starting%n", journey.getName());
+        log.info("journey \"{}\" starting", journey.getName());
     }
 
     @AfterJourney
     public void afterJourney(Journey journey) {
-        log.info("journey \"%s\" over%n", journey.getName());
+        log.info("journey \"{}\" over", journey.getName());
     }
 }

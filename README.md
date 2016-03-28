@@ -3,46 +3,17 @@
 
 A domain specific language for automating and testing web applications.
 
-## Usage
+## Build
 
-To run tests, you'll need to set-up a Junit runner, within your test sources:
+To build this:
 
-~~~java
-@RunWith(JourneysRunner.class)
-@ContextConfig(FirefoxConfig.class)
-public class JourneyIT {
-}
+~~~shell
+mvn install
 ~~~
 
-You'll need to create a config file too, this allows you to choose which driver you're using. If you want to have
+## Command Line Usage
 
-~~~java
-public class Config {
-
-    public WebDriver webDriver() {
-        return new FirefoxDriver();
-    }
-}
-~~~
-
-If you need to do any set-up before a journey, your config can have annotated methods as follows:
-
-~~~java
-public class Config {
-    @BeforeJourney
-    public void beforeJourney(Journey journey) {
-        System.out.printf("journey \"%s\" starting%n", journey.getName());
-    }
-
-    @AfterJourney
-    public void afterJourney(Journey journey) {
-        System.out.printf("journey \"%s\" over%n", journey.getName());
-    }
-    // ...
-}
-~~~
-
-In the same path as your test (e.g. if your tests are in `src/test/java/myapp` then your resources should be in `src/test/resources/myapp`), you should create journey files. Each file should container one or more journeys:
+You need to create journey files, for example:
 
 ~~~ruby
 Journey: "Searching on Google"
@@ -55,6 +26,17 @@ Journey: "Searching on Google"
     submit
     title should be "Cheese! - Google Search"
     text of "input[name=q]" should be "Cheese!"
+~~~
+
+~~~shell
+~/web-lang $ java -Dwl.browser=firefox -Dwl.path=src/test/resources/it/google/google-search.journey -jar ~/.m2/reposito/web-lang/web-lang/1.0.0-SNAPSHOT/web-lang-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+Journey: Searching on Google
+	go to "http://www.google.com" ... PASS
+	click on "input[name='q']" ... PASS
+	type "Cheese!" into "input[name='q']" ... PASS
+	submit ... PASS
+	title should be "Cheese! - Google Search" ... PASS
+	text of "input[name='q']" should be "Cheese!" ... PASS
 ~~~
 
 **Page Objects** are a first-class concept, the above journey could be written as follows:
@@ -127,6 +109,51 @@ By default, selectors are CSS (as these are fast and versatile). If you want to 
 | `tagName:foo`         | `foo`              | By tag name.          |
 | `xpath:foo`           | -                  | By xpath.             |
 | `foo`                 | `foo`              | By CSS, no prefix.    |
+
+## Java Usage
+
+To run tests, you'll need to have a test within your test sources:
+
+~~~java
+package mytests;
+
+@RunWith(JourneysRunner.class)
+@ContextConfig
+public class JourneyIT {
+}
+~~~
+
+This will run journeys in the class path of that class. In the above can it would look in `src/test/resources/mytests`.
+
+## Advanced Java Usage
+
+You'll can use custom config with `@ContextConfig(Confg.class)`. this allows you to choose which driver you're using. If you want to have
+
+~~~java
+public class Config {
+
+    public WebDriver webDriver() {
+        return new FirefoxDriver();
+    }
+}
+~~~
+
+If you need to do any set-up before a journey, your config can have annotated methods as follows:
+
+~~~java
+public class Config {
+    @BeforeJourney
+    public void beforeJourney(Journey journey) {
+        System.out.printf("journey \"%s\" starting%n", journey.getName());
+    }
+
+    @AfterJourney
+    public void afterJourney(Journey journey) {
+        System.out.printf("journey \"%s\" over%n", journey.getName());
+    }
+    // ...
+}
+~~~
 
 ## Road-map
 
