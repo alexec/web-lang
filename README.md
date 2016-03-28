@@ -121,10 +121,12 @@ By default, selectors are CSS (as these are fast and versatile). If you want to 
 | Example               | As CSS             | Description           |
 |--------------------------------------------|-----------------------|
 | `id:foo`              | `#myId`            | By ID.                |
-| `linkText:foo`        | N/A                | By link text.         |
-| `partialLinkText:foo` | N/A                | By partial link text. |
+| `linkText:foo`        | -                  | By link text.         |
+| `partialLinkText:foo` | -                  | By partial link text. |
 | `name:foo`            | `*[name='foo']`    | By name.              |
 | `tagName:foo`         | `foo`              | By tag name.          |
+| `xpath:foo`           | -                  | By xpath.             |
+
 
 ## Road-map
 

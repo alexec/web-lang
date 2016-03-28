@@ -32,6 +32,7 @@ public class Selector {
                         value.startsWith("partialLinkText:") ? By.partialLinkText(value.substring(16)) :
                                 value.startsWith("name:") ? By.name(value.substring(5)) :
                                         value.startsWith("tagName") ? By.tagName(value.substring(8)) :
+                                                value.startsWith("xpath") ? By.xpath(value.substring(6)) :
                                                 By.cssSelector(value);
     }
 
