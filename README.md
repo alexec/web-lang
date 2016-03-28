@@ -95,11 +95,22 @@ mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 
 You can find more examples under [src/test/resources/it](src/test/resources/it).
 
-| Example                                                                                                                                            | Description                                            |
-|----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|
-| `capture to "filename.png"`                                                                                                                        | Capture a screenshot                                   |
-| `attribute "id" of "#footer" should be "footer"`                                                                                                   | Check an attribute's value.                            |
-| `select "Olives" in "select[name='ingredients[]']" attribute "selected" of "select[name='ingredients[]'] option[value='Olives']" should be "true"` | Set a select list value, then check it's value is set. |
+| Example                                                                                          | Description                                             |
+|--------------------------------------------------------------------------------------------------|---------------------------------------------------------|
+| `capture to "filename.png"`                                                                      | Capture a screenshot                                    |
+| `attribute "id" of "#footer" should be "footer"`                                                 | Check an attribute's value.                             |
+| `check "input[type='checkbox']:nth-of-type(1)"`                                                  | Make sure a check-box is checked.                       |
+| `"input[type='checkbox']:nth-of-type(1)" should be checked`                                      | Verify a check-box .                                    |
+| `uncheck "input[type='checkbox']:nth-of-type(2)"`                                                | Make sure a check-box is not checked.                   |
+| `"input[type='checkbox']:nth-of-type(2)" should not be checked`                                  | Verify that a check-box is not checked.                 |
+| `click on "input[type='radio'][value='No']"" #radioId" should be checked`                        | Check a radio-button, then make sure it was checked.    |
+| `select "Olives" in "select[name='ingredients[]']"`                                              | Select a list option.                                   |
+| `attribute "selected" of "select[name='ingredients[]'] option[value='Olives']" should be "true"` | Make sure a option is selected.                         |
+| `execute script "alert('hello');"`                                                               | Execute JavaScript.                                     |
+| `switch to frame "frame-top"`                                                                    | Switch to a frame by name.                              |
+| `switch to frame 0`                                                                              | Switch to a frame based on index.                       |
+| `switch to default content`                                                                      | Switch back to default content after switch to a frame. |
+| `dismiss alert`                                                                                  | Dismiss an alert.                                       |
 
 ## Road-map
 
@@ -110,6 +121,7 @@ You can find more examples under [src/test/resources/it](src/test/resources/it).
 * Multi-select.
 * Clicking by link text.
 * Tags.
+* Table support. First-class?
 * Full support for changing driver at runtime.
 
 ## Resources
