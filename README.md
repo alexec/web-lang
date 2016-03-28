@@ -57,10 +57,40 @@ Journey: "Searching on Google"
     text of "input[name=q]" should be "Cheese!"
 ~~~
 
+**Page Objects** are a first-class concept, the above journey could be written as follows:
+
+~~~ruby
+Page: "Search"
+
+    url is "http://www.google.com"
+
+    # you can define elements that are on the page for resuse
+
+    element "query" is "input[name='q']"
+
+Page: "Results"
+
+    # you can have rules that are used to check the page is what you expect
+
+    title should contain "Google Search"
+
+Journey: "Searching on Google"
+
+    go to "Search"
+    # if a selector starts with "@" then it is an alias to an element on the current page
+    click on "@query"
+    type "Cheese!" into "@query"
+    submit
+    # this checks the pages is the page you expect
+    page should be "Results"
+    title should be "Cheese! - Google Search"
+    text of "@query" should be "Cheese!"
+~~~
+
 
 You can run a group of tests to those just containing a string:
 
-~~~
+~~~shell
 mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 ~~~
 
