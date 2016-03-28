@@ -27,7 +27,8 @@ public class Selector {
         if (isTargetName()) {
             throw new IllegalStateException("not a by name");
         }
-        return By.cssSelector(value);
+        return value.startsWith("id:") ? By.id(value.substring(3)) :
+                By.cssSelector(value);
     }
 
     @Override

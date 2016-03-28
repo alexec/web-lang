@@ -40,4 +40,8 @@ public class SelectorTest {
         VALID_TARGET_NAME_SELECTOR.toBy();
     }
 
+    @Test
+    public void validById() throws Exception {
+        assertEquals(By.id("id"), Selector.valueOf("id:id").toBy());
+    }
 }

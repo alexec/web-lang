@@ -93,7 +93,7 @@ If you only want to run some journeys:
 mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 ~~~
 
-You can find more examples under [src/test/resources/it](src/test/resources/it).
+# Examples
 
 | Example                                                                                          | Description                                             |
 |--------------------------------------------------------------------------------------------------|---------------------------------------------------------|
@@ -111,6 +111,16 @@ You can find more examples under [src/test/resources/it](src/test/resources/it).
 | `switch to frame 0`                                                                              | Switch to a frame based on index.                       |
 | `switch to default content`                                                                      | Switch back to default content after switch to a frame. |
 | `dismiss alert`                                                                                  | Dismiss an alert.                                       |
+
+You can find more examples under [src/test/resources/it](src/test/resources/it).
+
+## Selectors
+
+By default, selectors are CSS (as these are fast and versatile). If you want to use a specific selector:
+
+| Example         | As CSS             | Description |
+|--------------------------------------|-------------|
+| `id:myId`       | `#myId`            | By ID.      |
 
 ## Road-map
 
