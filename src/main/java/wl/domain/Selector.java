@@ -31,7 +31,8 @@ public class Selector {
                 value.startsWith("linkText:") ? By.linkText(value.substring(9)) :
                         value.startsWith("partialLinkText:") ? By.partialLinkText(value.substring(16)) :
                                 value.startsWith("name:") ? By.name(value.substring(5)) :
-                                        By.cssSelector(value);
+                                        value.startsWith("tagName") ? By.tagName(value.substring(8)) :
+                                                By.cssSelector(value);
     }
 
     @Override
