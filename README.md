@@ -44,7 +44,7 @@ public class Config {
 
 In the same path as your test (e.g. if your tests are in `src/test/java/myapp` then your resources should be in `src/test/resources/myapp`), you should create journey files. Each file should container one or more journeys:
 
-~~~
+~~~ruby
 Journey: "Searching on Google"
 
     # the standard Google search
@@ -59,7 +59,7 @@ Journey: "Searching on Google"
 
 **Page Objects** are a first-class concept, the above journey could be written as follows:
 
-~~~ruby
+~~~scala
 Page: "Search"
 
     url is "http://www.google.com"
@@ -94,12 +94,13 @@ You can run a group of tests to those just containing a string:
 mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 ~~~
 
-![Google Search](src/docs/images/google-search.png)
-![Capture](src/docs/images/capture.png)
-![Check-boxes](src/docs/images/check-boxes.png)
-![Radio-buttons](src/docs/images/radio-buttons.png)
-![Frames](src/docs/images/frames.png)
-![JavaScript](src/docs/images/javascript.png)
+You can find more examples under [src/test/resources/it](src/test/resounces/it).
+
+| Example                     | Description          |
+|-----------------------------|----------------------|
+| `capture to "filename.png"` | Capture a screenshot |
+|                             |                      |
+|                             |                      |
 
 ## Road-map
 
@@ -109,7 +110,6 @@ mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 * Multi-select.
 * Clicking by link text.
 * Tags.
-* First-class page objects.
 * Full support for changing driver at runtime.
 
 ## Resources
