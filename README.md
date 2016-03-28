@@ -124,6 +124,7 @@ By default, selectors are CSS (as these are fast and versatile). If you want to 
 | `linkText:foo`        | N/A                | By link text.         |
 | `partialLinkText:foo` | N/A                | By partial link text. |
 | `name:foo`            | `*[name='foo']`    | By name.              |
+| `tagName:foo`         | `foo`              | By tag name.          |
 
 ## Road-map
 
