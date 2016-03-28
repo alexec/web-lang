@@ -25,7 +25,7 @@ public class Selector {
 
     By toBy() {
         if (isTargetName()) {
-            throw new IllegalStateException("not a by name name");
+            throw new IllegalStateException("not a by name");
         }
         return By.cssSelector(value);
     }
