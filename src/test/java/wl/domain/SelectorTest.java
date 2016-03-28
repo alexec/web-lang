@@ -49,4 +49,9 @@ public class SelectorTest {
     public void validByLinkText() throws Exception {
         assertEquals(By.linkText("myLinkText"), Selector.valueOf("linkText:myLinkText").toBy());
     }
+
+    @Test
+    public void validPartialLinkText() throws Exception {
+        assertEquals(By.partialLinkText("myPartialLinkText"), Selector.valueOf("partialLinkText:myPartialLinkText").toBy());
+    }
 }
