@@ -103,7 +103,7 @@ You can find more examples under [src/test/resources/it](src/test/resources/it).
 | `"input[type='checkbox']:nth-of-type(1)" should be checked`                                      | Verify a check-box .                                    |
 | `uncheck "input[type='checkbox']:nth-of-type(2)"`                                                | Make sure a check-box is not checked.                   |
 | `"input[type='checkbox']:nth-of-type(2)" should not be checked`                                  | Verify that a check-box is not checked.                 |
-| `click on "input[type='radio'][value='No']"" #radioId" should be checked`                        | Check a radio-button, then make sure it was checked.    |
+| `click on "input[type='radio'][value='No']" "#radioId" should be checked`                        | Check a radio-button, then make sure it was checked.    |
 | `select "Olives" in "select[name='ingredients[]']"`                                              | Select a list option.                                   |
 | `attribute "selected" of "select[name='ingredients[]'] option[value='Olives']" should be "true"` | Make sure a option is selected.                         |
 | `execute script "alert('hello');"`                                                               | Execute JavaScript.                                     |
