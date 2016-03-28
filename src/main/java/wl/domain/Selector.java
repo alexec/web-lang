@@ -28,6 +28,7 @@ public class Selector {
             throw new IllegalStateException("not a by name");
         }
         return value.startsWith("id:") ? By.id(value.substring(3)) :
+                value.startsWith("linkText:") ? By.linkText(value.substring(9)) :
                 By.cssSelector(value);
     }
 

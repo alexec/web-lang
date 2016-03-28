@@ -42,6 +42,11 @@ public class SelectorTest {
 
     @Test
     public void validById() throws Exception {
-        assertEquals(By.id("id"), Selector.valueOf("id:id").toBy());
+        assertEquals(By.id("myId"), Selector.valueOf("id:myId").toBy());
+    }
+
+    @Test
+    public void validByLinkText() throws Exception {
+        assertEquals(By.linkText("myLinkText"), Selector.valueOf("linkText:myLinkText").toBy());
     }
 }
