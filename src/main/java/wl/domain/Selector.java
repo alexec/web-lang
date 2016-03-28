@@ -4,11 +4,28 @@ import lombok.NonNull;
 import lombok.Value;
 import org.openqa.selenium.By;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+
 /**
  * Both a `By` and an alias.
  */
 @Value(staticConstructor = "valueOf")
 public class Selector {
+    private static final Map<String, Function<String, By>> byFactories = new HashMap<>();
+
+    static {
+        byFactories.put("id", By::id);
+        byFactories.put("linkText", By::linkText);
+        byFactories.put("partialLinkText", By::partialLinkText);
+        byFactories.put("name", By::name);
+        byFactories.put("tagName", By::tagName);
+        byFactories.put("className", By::className);
+        byFactories.put("xpath", By::xpath);
+    }
+
     @NonNull
     private final String value;
 
@@ -27,13 +44,14 @@ public class Selector {
         if (isTargetName()) {
             throw new IllegalStateException("not a by name");
         }
-        return value.startsWith("id:") ? By.id(value.substring(3)) :
-                value.startsWith("linkText:") ? By.linkText(value.substring(9)) :
-                        value.startsWith("partialLinkText:") ? By.partialLinkText(value.substring(16)) :
-                                value.startsWith("name:") ? By.name(value.substring(5)) :
-                                        value.startsWith("tagName") ? By.tagName(value.substring(8)) :
-                                                value.startsWith("xpath") ? By.xpath(value.substring(6)) :
-                                                By.cssSelector(value);
+
+        Optional<Map.Entry<String, Function<String, By>>> first = byFactories.entrySet().stream()
+                .filter(e -> value.startsWith(e.getKey() + ":"))
+                .findFirst();
+
+        return
+                first.isPresent() ? first.get().getValue().apply(value.substring(first.get().getKey().length() + 1)) :
+                        By.cssSelector(value);
     }
 
     @Override

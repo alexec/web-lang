@@ -73,4 +73,9 @@ public class SelectorTest {
     public void validXPath() throws Exception {
         assertEquals(By.xpath("foo"), by("xpath:foo"));
     }
+
+    @Test
+    public void validClassName() throws Exception {
+        assertEquals(By.className("foo"), by("className:foo"));
+    }
 }
