@@ -6,7 +6,7 @@ Page: "Docker Tags"
 Journey: "View blog posts"
 
     go to "http://www.alexecollins.com"
-    click on "a[href='/blog']"
+    click on "linkText:BLOG"
     title should be "Alex Collins - Blog"
 
 Journey: "View Docker tags"

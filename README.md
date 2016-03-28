@@ -126,6 +126,7 @@ By default, selectors are CSS (as these are fast and versatile). If you want to 
 | `name:foo`            | `*[name='foo']`    | By name.              |
 | `tagName:foo`         | `foo`              | By tag name.          |
 | `xpath:foo`           | -                  | By xpath.             |
+| `foo`                 | `foo`              | By CSS, no prefix.    |
 
 ## Road-map
 
