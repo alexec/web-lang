@@ -31,7 +31,7 @@ Journey: "Searching on Google"
 Then, to run this test:
 
 ~~~shell
-~/web-lang $ java -Dwl.browser=firefox -Dwl.path=google-search.journey -jar ~/.m2/reposito/web-lang/web-lang/1.0.0-SNAPSHOT/web-lang-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+~/web-lang $ java -Dwl.browser=firefox -Dwl.path=google-search.journey -jar ~/.m2/repository/web-lang/web-lang/1.0.0-SNAPSHOT/web-lang-1.0.0-SNAPSHOT-jar-with-dependencies.jar
 Journey: Searching on Google
 	go to "http://www.google.com" ... PASS
 	click on "input[name='q']" ... PASS
@@ -121,26 +121,11 @@ To run tests, you'll need to have a test within your test sources:
 package mytests;
 
 @RunWith(JourneysRunner.class)
-@ContextConfig
 public class JourneyIT {
 }
 ~~~
 
 This will run journeys in the class path of that class. In the above can it would look in `src/test/resources/mytests`.
-
-## Advanced Java Usage
-
-You'll can use custom config with `@ContextConfig(Confg.class)`. this allows you to choose which driver you're using. If you want to have
-
-~~~java
-public class MyConfig implements wl.api.Config {
-
-    @Override
-    public WebDriver webDriver() {
-        return new FirefoxDriver();
-    }
-}
-~~~
 
 
 ## Road-map
