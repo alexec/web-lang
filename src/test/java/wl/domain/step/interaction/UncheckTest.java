@@ -9,7 +9,7 @@ public class UncheckTest {
     private final Uncheck uncheck = Uncheck.selector(Fixtures.SELECTOR);
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("un-check \"selector\"", uncheck.getDescription());
     }
 }

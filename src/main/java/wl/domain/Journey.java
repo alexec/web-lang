@@ -29,8 +29,8 @@ public class Journey {
         return steps;
     }
 
-    boolean addStep(Step step) {
-        return steps.add(step);
+    void addStep(Step step) {
+        steps.add(step);
     }
 
     public Map<String, Page> getPages() {

@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ExecutionContext {
-    private static Consumer<WebDriver> SLEEP =
+    private static final Consumer<WebDriver> SLEEP =
             (WebDriver ignored) -> {
                 try {
                     Thread.sleep(1000);

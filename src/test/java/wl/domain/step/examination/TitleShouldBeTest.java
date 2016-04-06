@@ -8,7 +8,7 @@ public class TitleShouldBeTest {
     private final TitleShouldBe titleShouldBe = TitleShouldBe.expectedTitle("value");
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("title should be \"value\"", titleShouldBe.getDescription());
     }
 }

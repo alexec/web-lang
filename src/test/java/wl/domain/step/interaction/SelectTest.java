@@ -14,7 +14,7 @@ public class SelectTest {
             .build();
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("select \"value\" in \"selector\"", select.getDescription());
     }
 }

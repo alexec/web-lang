@@ -8,7 +8,7 @@ public class SwitchToFrameByNameTest {
     private final SwitchToFrameByName switchToFrameByName = SwitchToFrameByName.name("name");
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("switch to frame \"name\"", switchToFrameByName.getDescription());
     }
 }

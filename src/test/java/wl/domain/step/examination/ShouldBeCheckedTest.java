@@ -9,7 +9,7 @@ public class ShouldBeCheckedTest {
     private final ShouldBeChecked shouldBeChecked = ShouldBeChecked.selector(Fixtures.SELECTOR);
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("\"selector\" should be checked", shouldBeChecked.getDescription());
     }
 }

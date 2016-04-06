@@ -9,7 +9,7 @@ public class TypeTest {
     private final Type type = Type.builder().selector(Fixtures.SELECTOR).text("text").build();
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("type \"text\" into \"selector\"", type.getDescription());
     }
 }

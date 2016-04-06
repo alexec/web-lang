@@ -8,7 +8,7 @@ public class SubmitTest {
     private final Submit submit = Submit.INSTANCE;
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("submit", submit.getDescription());
     }
 }

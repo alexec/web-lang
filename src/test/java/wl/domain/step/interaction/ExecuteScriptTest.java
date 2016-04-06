@@ -8,7 +8,7 @@ public class ExecuteScriptTest {
     private final ExecuteScript executeScript = ExecuteScript.script("script");
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("execute script \"script\"", executeScript.getDescription());
     }
 }

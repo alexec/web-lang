@@ -9,7 +9,7 @@ public class CheckTest {
     private final Check check = Check.selector(Fixtures.SELECTOR);
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("check \"selector\"", check.getDescription());
     }
 }

@@ -8,7 +8,7 @@ public class TitleShouldContainTest {
     private final TitleShouldContain titleShouldContain = TitleShouldContain.expectedTitle("value");
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("title should contain \"value\"", titleShouldContain.getDescription());
     }
 }

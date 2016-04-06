@@ -15,7 +15,7 @@ import java.util.Collections;
 @SuppressWarnings("WeakerAccess")
 @BuildParseTree
 public class JourneysParser extends BaseParser<Object> {
-    JourneysBuilder dto = new JourneysBuilder();
+    final JourneysBuilder dto = new JourneysBuilder();
 
     Rule Journeys() {
         return Sequence(

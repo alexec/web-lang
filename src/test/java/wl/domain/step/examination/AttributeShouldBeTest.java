@@ -13,7 +13,7 @@ public class AttributeShouldBeTest {
             .build();
 
     @Test
-    public void description() throws Exception {
+    public void description() {
 
         assertEquals(
                 "attribute \"attributeName\" of \"selector\" should be \"expectedValue\"",

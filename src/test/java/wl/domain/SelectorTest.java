@@ -15,67 +15,67 @@ public class SelectorTest {
     }
 
     @Test
-    public void startingWithAtSymbolIsTargetName() throws Exception {
+    public void startingWithAtSymbolIsTargetName() {
         assertTrue(VALID_TARGET_NAME_SELECTOR.isTargetName());
     }
 
     @Test
-    public void validTargetName() throws Exception {
+    public void validTargetName() {
         assertEquals("targetName", VALID_TARGET_NAME_SELECTOR.toTargetName());
     }
 
     @Test(expected = IllegalStateException.class)
-    public void invalidTargetName() throws Exception {
+    public void invalidTargetName() {
         VALID_CSS_SELECTOR.toTargetName();
     }
 
     @Test
-    public void startingWithoutAtSymbolIsNotTargetName() throws Exception {
+    public void startingWithoutAtSymbolIsNotTargetName() {
         assertFalse(VALID_CSS_SELECTOR.isTargetName());
     }
 
     @Test
-    public void validCssSelector() throws Exception {
+    public void validCssSelector() {
         assertEquals(By.cssSelector("cssSelector"), VALID_CSS_SELECTOR.toBy());
     }
 
     @Test(expected = IllegalStateException.class)
-    public void invalidCssSelector() throws Exception {
+    public void invalidCssSelector() {
         VALID_TARGET_NAME_SELECTOR.toBy();
     }
 
     @Test
-    public void validById() throws Exception {
+    public void validById() {
         assertEquals(By.id("foo"), by("id:foo"));
     }
 
     @Test
-    public void validByLinkText() throws Exception {
+    public void validByLinkText() {
         assertEquals(By.linkText("foo"), by("linkText:foo"));
     }
 
     @Test
-    public void validPartialLinkText() throws Exception {
+    public void validPartialLinkText() {
         assertEquals(By.partialLinkText("foo"), by("partialLinkText:foo"));
     }
 
     @Test
-    public void validName() throws Exception {
+    public void validName() {
         assertEquals(By.name("foo"), by("name:foo"));
     }
 
     @Test
-    public void validTagName() throws Exception {
+    public void validTagName() {
         assertEquals(By.tagName("foo"), by("tagName:foo"));
     }
 
     @Test
-    public void validXPath() throws Exception {
+    public void validXPath() {
         assertEquals(By.xpath("foo"), by("xpath:foo"));
     }
 
     @Test
-    public void validClassName() throws Exception {
+    public void validClassName() {
         assertEquals(By.className("foo"), by("className:foo"));
     }
 }

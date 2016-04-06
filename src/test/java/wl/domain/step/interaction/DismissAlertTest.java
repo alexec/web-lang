@@ -7,7 +7,7 @@ public class DismissAlertTest {
     private final DismissAlert dismissAlert = DismissAlert.INSTANCE;
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         Assert.assertEquals("dismiss alert", dismissAlert.getDescription());
     }
 }

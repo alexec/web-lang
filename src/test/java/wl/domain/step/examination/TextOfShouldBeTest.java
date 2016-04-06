@@ -9,7 +9,7 @@ public class TextOfShouldBeTest {
     private final TextOfShouldBe textOfShouldBe = TextOfShouldBe.builder().selector(Fixtures.SELECTOR).expectedText("text").build();
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("text of \"selector\" should be \"text\"", textOfShouldBe.getDescription());
     }
 }

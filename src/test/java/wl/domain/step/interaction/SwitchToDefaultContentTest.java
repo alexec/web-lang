@@ -8,7 +8,7 @@ public class SwitchToDefaultContentTest {
     private final SwitchToDefaultContent switchToDefaultContent = SwitchToDefaultContent.INSTANCE;
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("switch to default content", switchToDefaultContent.getDescription());
     }
 }

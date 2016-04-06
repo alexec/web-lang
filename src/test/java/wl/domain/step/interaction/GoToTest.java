@@ -8,7 +8,7 @@ public class GoToTest {
     private final GoTo goTo = GoTo.place("http://dummy");
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("go to \"http://dummy\"", goTo.getDescription());
     }
 

@@ -2,7 +2,7 @@ Page: "Search"
 
     url is "http://www.google.com"
 
-    # you can define elements that are on the page for resuse
+    # you can define elements that are on the page for reuse
 
     element "query" is "input[name='q']"
 

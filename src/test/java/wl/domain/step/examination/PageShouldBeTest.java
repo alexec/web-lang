@@ -8,7 +8,7 @@ public class PageShouldBeTest {
     private final PageShouldBe pageShouldBe = PageShouldBe.expectedPage("pageName");
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("page should be \"pageName\"", pageShouldBe.getDescription());
 
     }

@@ -14,7 +14,9 @@ import java.util.Map;
 public class Page {
     @NonNull
     private final String name;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final Map<String, String> elements = new HashMap<>();
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private final List<Step> steps = new ArrayList<>();
     private URI url;
 

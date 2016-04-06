@@ -9,7 +9,7 @@ public class ClickOnTest {
     private final ClickOn clickOn = ClickOn.selector(Fixtures.SELECTOR);
 
     @Test
-    public void description() throws Exception {
+    public void description() {
         assertEquals("click on \"selector\"", clickOn.getDescription());
     }
 
