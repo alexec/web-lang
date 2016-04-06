@@ -21,17 +21,16 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 
 @Slf4j
 public class JourneyRunner extends ParentRunner<Step> {
 
-    private final Config config;
     private final Journey journey;
     private ExecutionContext context;
 
-    public JourneyRunner(Config config, Journey journey) throws InitializationError {
+    public JourneyRunner(Journey journey) throws InitializationError {
         super(JourneyRunner.class);
-        this.config = config;
         this.journey = journey;
     }
 
@@ -56,7 +55,7 @@ public class JourneyRunner extends ParentRunner<Step> {
     @Override
     public void run(RunNotifier notifier) {
 
-        WebDriver driver = config.webDriver();
+        WebDriver driver = ServiceLoader.load(Config.class).iterator().next().webDriver();
         context = new ExecutionContext(driver, journey.getPages());
         try {
             super.run(notifier);
