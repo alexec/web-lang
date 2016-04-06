@@ -24,7 +24,7 @@ public class TitleShouldContain implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        context.waitUntil((WebDriver driver) -> expectedTitle.contains(driver.getTitle()));
+        context.waitUntil((WebDriver driver) -> driver.getTitle().contains(expectedTitle));
         assertThat(getDescription(), context.getDriver().getTitle(), containsString(expectedTitle));
     }
 

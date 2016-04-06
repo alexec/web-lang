@@ -8,7 +8,7 @@ public class DefaultConfig implements Config {
 
     @Override
     public WebDriver webDriver() {
-        String browser = System.getProperty("wl.browser", "htmlunit");
+        String browser = System.getProperty("wl.browser", "firefox");
         switch (browser) {
             case "htmlunit":
                 return new HtmlUnitDriver();

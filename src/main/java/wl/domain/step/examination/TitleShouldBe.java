@@ -23,7 +23,7 @@ public class TitleShouldBe implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        context.waitUntil((WebDriver driver) -> expectedTitle.equals(driver.getTitle()));
+        context.waitUntil((WebDriver driver) -> driver.getTitle().equals(expectedTitle));
         String title = context.getDriver().getTitle();
         assertEquals(getDescription(), expectedTitle, title);
     }
