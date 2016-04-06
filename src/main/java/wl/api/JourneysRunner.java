@@ -18,17 +18,14 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 // https://github.com/cucumber/cucumber-jvm/blob/master/junit/src/main/java/cucumber/api/junit/Cucumber.java
 public class JourneysRunner extends ParentRunner<JourneyRunner> {
     private static final String PATH_SUFFIX = ".journey";
     private final List<JourneyRunner> children = new ArrayList<>();
     private final JourneyFactory journeyFactory = new JourneyFactory();
-    private final Object config;
+    private final Config config;
     private final String journeyNameFilter = System.getProperty("wl.journey", "");
 
     public JourneysRunner(Class<?> clazz) throws InitializationError, IOException, URISyntaxException {
@@ -89,9 +86,12 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
 
     }
 
-    private Object createConfig(Class<?> clazz) throws InitializationError {
+    private Config createConfig(Class<?> clazz) throws InitializationError {
         try {
-            return clazz.getAnnotation(ContextConfig.class).value().newInstance();
+            ContextConfig annotation = clazz.getAnnotation(ContextConfig.class);
+            return annotation != null ?
+                    annotation.value().newInstance() :
+                    ServiceLoader.load(Config.class, clazz.getClassLoader()).iterator().next();
         } catch (InstantiationException | IllegalAccessException e) {
             throw new InitializationError(e);
         }

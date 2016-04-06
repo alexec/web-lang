@@ -2,9 +2,9 @@ package it;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import wl.api.Config;
 
-@SuppressWarnings({"WeakerAccess", "unused"})
-public class HtmlUnitConfig extends AbstractConfig {
+public class HtmlUnitConfig implements Config {
 
     @Override
     public WebDriver webDriver() {

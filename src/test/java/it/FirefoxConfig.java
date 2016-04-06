@@ -2,9 +2,9 @@ package it;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import wl.api.Config;
 
-@SuppressWarnings({"WeakerAccess", "unused"})
-public class FirefoxConfig extends AbstractConfig {
+public class FirefoxConfig implements Config {
 
     @Override
     public WebDriver webDriver() {

@@ -1,12 +1,12 @@
 package wl.api;
 
-import wl.config.DefaultConfig;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import java.lang.annotation.*;
-
-@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Inherited
+@Target(ElementType.TYPE)
 public @interface ContextConfig {
-    Class<?> value() default DefaultConfig.class;
+    Class<? extends Config> value() default DefaultConfig.class;
 }

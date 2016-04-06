@@ -9,12 +9,10 @@ import org.junit.runners.model.InitializationError;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import wl.api.AfterJourney;
-import wl.api.BeforeJourney;
+import wl.api.Config;
 import wl.domain.ExecutionContext;
 import wl.domain.Journey;
 import wl.domain.step.Step;
-import wl.infrastructure.context.Beans;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,11 +25,11 @@ import java.util.List;
 @Slf4j
 public class JourneyRunner extends ParentRunner<Step> {
 
-    private final Object config;
+    private final Config config;
     private final Journey journey;
     private ExecutionContext context;
 
-    public JourneyRunner(Object config, Journey journey) throws InitializationError {
+    public JourneyRunner(Config config, Journey journey) throws InitializationError {
         super(JourneyRunner.class);
         this.config = config;
         this.journey = journey;
@@ -58,14 +56,11 @@ public class JourneyRunner extends ParentRunner<Step> {
     @Override
     public void run(RunNotifier notifier) {
 
-        WebDriver driver = Beans.getBeanByType(config, WebDriver.class);
-
+        WebDriver driver = config.webDriver();
         context = new ExecutionContext(driver, journey.getPages());
-        Beans.invokeMethodsByAnnotation(config, BeforeJourney.class, journey);
         try {
             super.run(notifier);
         } finally {
-            Beans.invokeMethodsByAnnotation(config, AfterJourney.class, journey);
             driver.quit();
             context = null;
         }

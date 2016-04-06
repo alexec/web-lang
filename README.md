@@ -133,42 +133,24 @@ This will run journeys in the class path of that class. In the above can it woul
 You'll can use custom config with `@ContextConfig(Confg.class)`. this allows you to choose which driver you're using. If you want to have
 
 ~~~java
-public class Config {
+public class MyConfig implements wl.api.Config {
 
+    @Override
     public WebDriver webDriver() {
         return new FirefoxDriver();
     }
 }
 ~~~
 
-If you need to do any set-up before a journey, your config can have annotated methods as follows:
-
-~~~java
-public class Config {
-    @BeforeJourney
-    public void beforeJourney(Journey journey) {
-        System.out.printf("journey \"%s\" starting%n", journey.getName());
-    }
-
-    @AfterJourney
-    public void afterJourney(Journey journey) {
-        System.out.printf("journey \"%s\" over%n", journey.getName());
-    }
-    // ...
-}
-~~~
 
 ## Road-map
 
-* Standalone run.
 * Windows.
 * Prompts.
 * Confirm.
 * Multi-select.
-* Clicking by link text.
 * Tags.
 * Table support. First-class?
-* Full support for changing driver at runtime.
 
 ## Resources
 
