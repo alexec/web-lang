@@ -2,7 +2,7 @@ package wl.domain.step.interaction;
 
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.By;
+import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
@@ -22,7 +22,7 @@ public class Uncheck implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        By by = context.by(selector);
+        val by = context.by(selector);
         context.repeatUntil(driver -> !driver.findElement(by).isSelected(), driver -> driver.findElement(by).click());
     }
 

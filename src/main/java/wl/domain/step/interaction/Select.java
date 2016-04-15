@@ -3,7 +3,7 @@ package wl.domain.step.interaction;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.WebElement;
+import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
@@ -26,9 +26,9 @@ public class Select implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        WebElement element = context.getDriver().findElement(context.by(selector));
+        val element = context.getDriver().findElement(context.by(selector));
 
-        org.openqa.selenium.support.ui.Select select = new org.openqa.selenium.support.ui.Select(element);
+        val select = new org.openqa.selenium.support.ui.Select(element);
 
         values.forEach(select::selectByValue);
     }

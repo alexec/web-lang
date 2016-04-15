@@ -1,5 +1,7 @@
 package wl.infrastructure;
 
+import lombok.val;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,9 +21,9 @@ public class Resources {
     }
 
     private static void iterateFileSystem(File r, Predicate<URL> f, Set<URL> s) throws IOException {
-        File[] files = r.listFiles();
+        val files = r.listFiles();
         if (files != null) {
-            for (File file : files) {
+            for (val file : files) {
                 if (file.isDirectory()) {
                     iterateFileSystem(file, f, s);
                 } else if (file.isFile()) {
@@ -32,9 +34,9 @@ public class Resources {
     }
 
     private static void iterateJarFile(File file, Predicate<URL> f, Set<URL> s) throws IOException {
-        JarFile jFile = new JarFile(file);
+        val jFile = new JarFile(file);
         for (Enumeration<JarEntry> je = jFile.entries(); je.hasMoreElements(); ) {
-            JarEntry j = je.nextElement();
+            val j = je.nextElement();
             if (!j.isDirectory()) {
                 collectURL(f, s, new URL("jar", "", file.toURI() + "!/" + j.getName()));
             }
@@ -50,10 +52,9 @@ public class Resources {
     }
 
     public static Set<URL> getResources(Class rootClass, Predicate<URL> filter) throws IOException, URISyntaxException {
-        Set<URL> collectedURLs = new HashSet<>();
-        File codeRoot = new File(rootClass.getProtectionDomain().getCodeSource().getLocation().toURI());
-
-        File searchRoot = new File(codeRoot, rootClass.getPackage().getName().replace(".", "/"));
+        val collectedURLs = new HashSet<URL>();
+        val codeRoot = new File(rootClass.getProtectionDomain().getCodeSource().getLocation().toURI());
+        val searchRoot = new File(codeRoot, rootClass.getPackage().getName().replace(".", "/"));
 
         iterateEntry(searchRoot, filter, collectedURLs);
         return collectedURLs;

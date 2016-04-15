@@ -1,11 +1,11 @@
 package wl.infrastructure;
 
+import lombok.val;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
 import java.io.PrintStream;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PrettyListener extends RunListener {
@@ -20,16 +20,15 @@ public class PrettyListener extends RunListener {
     @Override
     public void testStarted(Description description) {
 
-        String displayName = description.getDisplayName();
-
-        Matcher matcher = Pattern.compile("(.*)\\((.*)\\)").matcher(displayName);
+        val displayName = description.getDisplayName();
+        val matcher = Pattern.compile("(.*)\\((.*)\\)").matcher(displayName);
 
         if (!matcher.find()) {
             throw new AssertionError();
         }
 
-        String journeyName = matcher.group(2);
-        String step = matcher.group(1);
+        val journeyName = matcher.group(2);
+        val step = matcher.group(1);
 
         if (!journeyName.equals(this.journeyName)) {
             out.println("Journey: " + journeyName);

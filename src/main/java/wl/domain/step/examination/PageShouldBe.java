@@ -2,6 +2,7 @@ package wl.domain.step.examination;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.step.Step;
 
@@ -20,7 +21,7 @@ public class PageShouldBe implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        for (Step step : context.getPage(pageName).getSteps()) {
+        for (val step : context.getPage(pageName).getSteps()) {
             step.execute(context);
         }
     }

@@ -3,7 +3,7 @@ package wl.domain.step.examination;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
-import org.openqa.selenium.WebElement;
+import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
@@ -25,8 +25,8 @@ public class TextOfShouldBe implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        WebElement element = context.getDriver().findElement(context.by(selector));
-        String value = element.getTagName().equals("input") ? element.getAttribute("value") : element.getText();
+        val element = context.getDriver().findElement(context.by(selector));
+        val value = element.getTagName().equals("input") ? element.getAttribute("value") : element.getText();
         assertEquals(getDescription(), expectedText, value);
     }
 

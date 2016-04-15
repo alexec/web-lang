@@ -2,6 +2,7 @@ package wl.domain;
 
 
 import lombok.Getter;
+import lombok.val;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -49,7 +50,7 @@ public class ExecutionContext {
 
     private By targetToBy(Selector selector) {
         Objects.requireNonNull(currentPage);
-        String cssSelector = currentPage.getElements().get(selector.toTargetName());
+        val cssSelector = currentPage.getElements().get(selector.toTargetName());
         if (cssSelector == null) {
             throw new IllegalStateException(String.format("target \"%s\" not found on page \"%s\"", selector, currentPage.getName()));
         }

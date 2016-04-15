@@ -2,8 +2,8 @@ package wl.domain.step.interaction;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.val;
 import wl.domain.ExecutionContext;
-import wl.domain.Page;
 import wl.domain.step.Step;
 
 @Data
@@ -21,8 +21,8 @@ public class GoTo implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        Page page = context.getPage(place);
-        String url = page != null ? page.getUrl().toString() : place;
+        val page = context.getPage(place);
+        val url = page != null ? page.getUrl().toString() : place;
 
         context.getDriver().get(url);
 

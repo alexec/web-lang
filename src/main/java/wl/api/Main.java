@@ -1,7 +1,7 @@
 package wl.api;
 
+import lombok.val;
 import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import wl.infrastructure.PrettyListener;
 
@@ -9,9 +9,9 @@ import wl.infrastructure.PrettyListener;
 public class Main {
 
     public static void main(String[] args) {
-        JUnitCore core = new JUnitCore();
+        val core = new JUnitCore();
         core.addListener(new PrettyListener());
-        Result result = core.run(Main.class);
+        val result = core.run(Main.class);
         System.exit(result.wasSuccessful() ? 0 : 1);
     }
 }

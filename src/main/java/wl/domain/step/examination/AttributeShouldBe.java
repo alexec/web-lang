@@ -3,6 +3,7 @@ package wl.domain.step.examination;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
@@ -18,7 +19,7 @@ public class AttributeShouldBe implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        String value = context.getDriver().findElement(context.by(selector)).getAttribute(attributeName);
+        val value = context.getDriver().findElement(context.by(selector)).getAttribute(attributeName);
         assertEquals(getDescription(), expectedValue, value);
     }
 

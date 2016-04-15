@@ -1,6 +1,7 @@
 package wl.infrastructure;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
@@ -8,7 +9,6 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import wl.api.Config;
 import wl.domain.ExecutionContext;
 import wl.domain.Journey;
@@ -36,7 +36,7 @@ public class JourneyRunner extends ParentRunner<Step> {
 
     @Override
     protected List<Step> getChildren() {
-        List<Step> steps = new ArrayList<>();
+        val steps = new ArrayList<Step>();
         steps.addAll(journey.getBackground().getSteps());
         steps.addAll(journey.getSteps());
         return steps;
@@ -55,7 +55,7 @@ public class JourneyRunner extends ParentRunner<Step> {
     @Override
     public void run(RunNotifier notifier) {
 
-        WebDriver driver = ServiceLoader.load(Config.class).iterator().next().webDriver();
+        val driver = ServiceLoader.load(Config.class).iterator().next().webDriver();
         context = new ExecutionContext(driver, journey.getPages());
         try {
             super.run(notifier);
@@ -67,7 +67,7 @@ public class JourneyRunner extends ParentRunner<Step> {
 
     @Override
     protected void runChild(Step child, RunNotifier notifier) {
-        Description description = describeChild(child);
+        val description = describeChild(child);
         notifier.fireTestStarted(description);
         try {
             child.execute(context);
@@ -80,7 +80,7 @@ public class JourneyRunner extends ParentRunner<Step> {
     }
 
     private void captureScreenshot(Description description) {
-        TakesScreenshot takesScreenshot = (TakesScreenshot) context.getDriver();
+        val takesScreenshot = (TakesScreenshot) context.getDriver();
         Path file;
         try {
             file = takesScreenshot.getScreenshotAs(OutputType.FILE).toPath();
@@ -90,12 +90,12 @@ public class JourneyRunner extends ParentRunner<Step> {
             return;
         }
 
-        Path screenshots = Paths.get("target", "screenshots");
+        val screenshots = Paths.get("target", "screenshots");
         try {
             if (!screenshots.toFile().exists()) {
                 Files.createDirectory(screenshots);
             }
-            Path dest = screenshots.resolve(description + ".png");
+            val dest = screenshots.resolve(description + ".png");
             log.debug("captured " + dest);
             Files.move(file, dest, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

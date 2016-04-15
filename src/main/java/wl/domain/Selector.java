@@ -2,11 +2,11 @@ package wl.domain;
 
 import lombok.NonNull;
 import lombok.Value;
+import lombok.val;
 import org.openqa.selenium.By;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -45,7 +45,7 @@ public class Selector {
             throw new IllegalStateException("not a by name");
         }
 
-        Optional<Map.Entry<String, Function<String, By>>> first = byFactories.entrySet().stream()
+        val first = byFactories.entrySet().stream()
                 .filter(e -> value.startsWith(e.getKey() + ":"))
                 .findFirst();
 

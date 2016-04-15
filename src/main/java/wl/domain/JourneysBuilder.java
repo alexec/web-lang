@@ -1,9 +1,13 @@
 package wl.domain;
 
+import lombok.val;
 import wl.domain.step.Step;
 
 import java.net.URI;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class JourneysBuilder {
     private final List<Journey> journeys = new LinkedList<>();
@@ -35,7 +39,7 @@ public class JourneysBuilder {
     }
 
     public JourneysBuilder addPage(String name) {
-        Page page = new Page(name);
+        val page = new Page(name);
         pages.put(name, page);
         last = page;
         return this;
@@ -56,7 +60,7 @@ public class JourneysBuilder {
     }
 
     public JourneysBuilder setBackground(String journeyName) {
-        Optional<Journey> journey = journeys.stream().filter(j -> j.getName().equals(journeyName)).findFirst();
+        val journey = journeys.stream().filter(j -> j.getName().equals(journeyName)).findFirst();
         if (!journey.isPresent()) {
             throw new IllegalStateException(String.format("cannot find journey name \"%s\"", journeyName));
         }

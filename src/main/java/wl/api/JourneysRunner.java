@@ -1,6 +1,7 @@
 package wl.api;
 
 
+import lombok.val;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.ParentRunner;
@@ -15,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
     public JourneysRunner(Class<?> clazz) throws InitializationError, IOException, URISyntaxException {
         super(clazz);
 
-        String path = System.getProperty("wl.path", "");
+        val path = System.getProperty("wl.path", "");
         if (!path.isEmpty()) {
             addChildrenFromPath(Paths.get(path));
         } else {
@@ -46,7 +46,7 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
     }
 
     private void addChildrenFromClassPath(Class<?> clazz) throws InitializationError, IOException, URISyntaxException {
-        for (URL url : Resources.getResources(clazz, u -> u.getPath().endsWith(PATH_SUFFIX))) {
+        for (val url : Resources.getResources(clazz, u -> u.getPath().endsWith(PATH_SUFFIX))) {
             try (InputStream in = url.openStream()) {
                 for (Journey journey : journeyFactory.create(in)) {
                     if (journey.getName().contains(journeyNameFilter)) {
@@ -60,7 +60,7 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
     }
 
     private void addChildrenFromPath(Path path) throws InitializationError, IOException {
-        List<Path> paths = new LinkedList<>();
+        val paths = new LinkedList<Path>();
         Files.walkFileTree(path, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
@@ -71,7 +71,7 @@ public class JourneysRunner extends ParentRunner<JourneyRunner> {
             }
         });
 
-        for (Path journeyPath : paths) {
+        for (val journeyPath : paths) {
             try (FileInputStream in = new FileInputStream(journeyPath.toFile())) {
                 for (Journey journey : journeyFactory.create(in)) {
                     if (journey.getName().contains(journeyNameFilter)) {

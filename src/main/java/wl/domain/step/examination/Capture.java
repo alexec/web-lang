@@ -2,6 +2,7 @@ package wl.domain.step.examination;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.val;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import wl.domain.ExecutionContext;
@@ -27,9 +28,9 @@ public class Capture implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        TakesScreenshot driver = TakesScreenshot.class.cast(context.getDriver());
+        val driver = TakesScreenshot.class.cast(context.getDriver());
 
-        Path file = driver.getScreenshotAs(OutputType.FILE).toPath();
+        val file = driver.getScreenshotAs(OutputType.FILE).toPath();
         try {
             Files.move(file, path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {

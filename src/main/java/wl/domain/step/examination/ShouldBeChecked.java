@@ -2,6 +2,7 @@ package wl.domain.step.examination;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
@@ -23,7 +24,7 @@ public class ShouldBeChecked implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        boolean checked = context.getDriver().findElement(context.by(selector)).isSelected();
+        val checked = context.getDriver().findElement(context.by(selector)).isSelected();
         assertTrue(getDescription(), checked);
     }
 

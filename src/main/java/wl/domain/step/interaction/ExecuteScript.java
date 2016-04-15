@@ -2,6 +2,7 @@ package wl.domain.step.interaction;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.val;
 import org.openqa.selenium.JavascriptExecutor;
 import wl.domain.ExecutionContext;
 import wl.domain.step.Step;
@@ -17,7 +18,7 @@ public class ExecuteScript implements Step {
 
     @Override
     public void execute(ExecutionContext context) {
-        JavascriptExecutor executor = JavascriptExecutor.class.cast(context.getDriver());
+        val executor = JavascriptExecutor.class.cast(context.getDriver());
 
         executor.executeScript(script);
     }
