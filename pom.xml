@@ -22,7 +22,7 @@
         <selenium.version>3.1.0</selenium.version>
         <slf4j.version>1.7.23</slf4j.version>
         <skipTests>false</skipTests>
-        <arch>linuxgi64</arch>
+        <arch>linux64</arch>
     </properties>
 
     <build>
