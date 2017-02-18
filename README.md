@@ -31,7 +31,7 @@ Journey: "Searching on Google"
 Then, to run this test:
 
 ~~~shell
-~/web-lang $ java -Dwl.browser=firefox -Dwl.path=google-search.journey -jar ~/.m2/repository/web-lang/web-lang/1.0.0-SNAPSHOT/web-lang-1.0.0-SNAPSHOT-jar-with-dependencies.jar
+~/web-lang $ java -Dwl.path=google-search.journey -jar ~/.m2/repository/web-lang/web-lang/1.0.0-SNAPSHOT/web-lang-1.0.0-SNAPSHOT-jar-with-dependencies.jar
 Journey: Searching on Google
 	go to "http://www.google.com" ... PASS
 	click on "input[name='q']" ... PASS
@@ -39,6 +39,16 @@ Journey: Searching on Google
 	submit ... PASS
 	title should be "Cheese! - Google Search" ... PASS
 	text of "input[name='q']" should be "Cheese!" ... PASS
+~~~
+
+If you want to use another browser add these options:
+
+~~~
+-Dwebdriver.chrome.driver=/path/to/chromedriver -Dwl.browser=chrome
+~~~
+
+~~~
+-Dwebdriver.gecko.driver=/path/to/geckodriver -Dwl.browser=firefox
 ~~~
 
 **Page Objects** are a first-class concept, the above journey could be written as follows:

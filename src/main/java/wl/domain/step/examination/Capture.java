@@ -5,6 +5,8 @@ import lombok.NonNull;
 import lombok.val;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import wl.domain.ExecutionContext;
 import wl.domain.step.Step;
 
@@ -15,6 +17,7 @@ import java.nio.file.StandardCopyOption;
 
 @Data
 public class Capture implements Step {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Capture.class);
     @NonNull
     private final Path path;
 
@@ -30,9 +33,11 @@ public class Capture implements Step {
     public void execute(ExecutionContext context) {
         val driver = TakesScreenshot.class.cast(context.getDriver());
 
-        val file = driver.getScreenshotAs(OutputType.FILE).toPath();
         try {
+            val file = driver.getScreenshotAs(OutputType.FILE).toPath();
             Files.move(file, path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (UnsupportedOperationException e) {
+            LOGGER.error("failed to take screenshot: " + e.getMessage());
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }

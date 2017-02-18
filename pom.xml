@@ -19,8 +19,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <antlr.version>4.5.2-1</antlr.version>
-        <selenium.version>2.52.0</selenium.version>
-        <slf4j.version>1.7.12</slf4j.version>
+        <selenium.version>3.1.0</selenium.version>
+        <slf4j.version>1.7.23</slf4j.version>
+        <skipTests>false</skipTests>
+        <arch>linuxgi64</arch>
     </properties>
 
     <build>
@@ -42,6 +44,12 @@
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
+                        <configuration>
+                            <systemProperties>
+                                <wl.browser>chrome</wl.browser>
+                                <webdriver.chrome.driver>bin/${arch}/chromedriver</webdriver.chrome.driver>
+                            </systemProperties>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -55,6 +63,7 @@
                             <goal>mutationCoverage</goal>
                         </goals>
                         <configuration>
+                            <skip>${skipTests}</skip>
                             <timestampedReports>false</timestampedReports>
                             <targetClasses>
                                 <param>wl*</param>
@@ -102,13 +111,13 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.8</version>
+            <version>1.16.14</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.parboiled</groupId>
             <artifactId>parboiled-java</artifactId>
-            <version>1.1.7</version>
+            <version>1.1.8</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -122,12 +131,17 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-htmlunit-driver</artifactId>
-            <version>${selenium.version}</version>
+            <artifactId>htmlunit-driver</artifactId>
+            <version>2.24</version>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
             <version>${selenium.version}</version>
         </dependency>
         <dependency>
@@ -143,7 +157,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.1.3</version>
+            <version>1.2.1</version>
         </dependency>
         <!-- test -->
         <dependency>
@@ -154,7 +168,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
+            <version>2.7.9</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
