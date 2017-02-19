@@ -9,6 +9,7 @@ import org.junit.runners.ParentRunner;
 import org.junit.runners.model.InitializationError;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriverException;
 import wl.api.Config;
 import wl.domain.ExecutionContext;
 import wl.domain.Journey;
@@ -70,7 +71,17 @@ public class JourneyRunner extends ParentRunner<Step> {
         val description = describeChild(child);
         notifier.fireTestStarted(description);
         try {
-            child.execute(context);
+            for (int i = 0; i < 6; i++) {
+                try {
+                    child.execute(context);
+                } catch (AssertionError | WebDriverException e) {
+                    if (i == 2) {
+                        throw e;
+                    } else {
+                        Thread.sleep(500);
+                    }
+                }
+            }
         } catch (Throwable t) {
             notifier.fireTestFailure(new Failure(description, t));
             captureScreenshot(description);
