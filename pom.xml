@@ -46,7 +46,7 @@
                         </goals>
                         <configuration>
                             <systemProperties>
-                                <wl.browser>htmlunit</wl.browser>
+                                <wl.browser>chrome</wl.browser>
                                 <webdriver.chrome.driver>bin/${arch}/chromedriver</webdriver.chrome.driver>
                             </systemProperties>
                         </configuration>
