@@ -6,12 +6,13 @@ import lombok.NonNull;
 import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
+import wl.domain.step.Step;
 
 import static org.junit.Assert.assertEquals;
 
 @Builder
 @Data
-public class TextOfShouldBe implements ExaminationStep {
+public class TextOfShouldBe implements Step {
     @NonNull
     private final Selector selector;
     @NonNull
@@ -26,7 +27,7 @@ public class TextOfShouldBe implements ExaminationStep {
     public void execute(ExecutionContext context) {
         val element = context.getDriver().findElement(context.by(selector));
         val value = element.getTagName().equals("input") ? element.getAttribute("value") : element.getText();
-        assertEquals(descriptionOfMismatch(value), expectedText, value);
+        assertEquals(getDescription(), expectedText, value);
     }
 
     @Override

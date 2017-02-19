@@ -4,11 +4,12 @@ import lombok.Data;
 import lombok.NonNull;
 import org.openqa.selenium.WebDriver;
 import wl.domain.ExecutionContext;
+import wl.domain.step.Step;
 
 import static org.junit.Assert.assertEquals;
 
 @Data
-public class TitleShouldBe implements ExaminationStep{
+public class TitleShouldBe implements Step {
     @NonNull
     private final String expectedTitle;
 
@@ -24,7 +25,7 @@ public class TitleShouldBe implements ExaminationStep{
     public void execute(ExecutionContext context) {
         context.waitUntil((WebDriver driver) -> driver.getTitle().equals(expectedTitle));
         String title = context.getDriver().getTitle();
-        assertEquals(descriptionOfMismatch(title), expectedTitle, title);
+        assertEquals(getDescription(), expectedTitle, title);
     }
 
     @Override
