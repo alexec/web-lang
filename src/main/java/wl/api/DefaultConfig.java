@@ -13,7 +13,7 @@ public class DefaultConfig implements Config {
         val browser = System.getProperty("wl.browser", "htmlunit");
         switch (browser) {
             case "htmlunit":
-                return new HtmlUnitDriver();
+                return new HtmlUnitDriver(true);
             case "firefox":
                 return new FirefoxDriver();
             case "chrome":

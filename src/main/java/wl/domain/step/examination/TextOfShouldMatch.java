@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.val;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
 
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @Builder
 @Data
@@ -30,7 +32,18 @@ public class TextOfShouldMatch implements Step {
     public void execute(ExecutionContext context) {
         val element = context.getDriver().findElement(context.by(selector));
         val value = element.getTagName().equals("input") ? element.getAttribute("value") : element.getText();
-        assertTrue(getDescription(), expectedText.matcher(value).find());
+        assertThat(getDescription(), value, new BaseMatcher<String>() {
+                    @Override
+                    public boolean matches(Object item) {
+                        return expectedText.matcher(String.valueOf(item)).find();
+                    }
+
+                    @Override
+                    public void describeTo(Description description) {
+                        description.appendValue(expectedText);
+                    }
+                }
+        );
     }
 
     @Override
