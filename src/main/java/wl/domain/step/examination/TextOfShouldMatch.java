@@ -1,3 +1,4 @@
+
 package wl.domain.step.examination;
 
 import lombok.Builder;
@@ -8,17 +9,19 @@ import wl.domain.ExecutionContext;
 import wl.domain.Selector;
 import wl.domain.step.Step;
 
-import static org.junit.Assert.assertEquals;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertTrue;
 
 @Builder
 @Data
-public class TextOfShouldBe implements Step {
+public class TextOfShouldMatch implements Step {
     @NonNull
     private final Selector selector;
     @NonNull
-    private final String expectedText;
+    private final Pattern expectedText;
 
-    private TextOfShouldBe(Selector selector, String expectedText) {
+    private TextOfShouldMatch(Selector selector, Pattern expectedText) {
         this.selector = selector;
         this.expectedText = expectedText;
     }
@@ -27,11 +30,11 @@ public class TextOfShouldBe implements Step {
     public void execute(ExecutionContext context) {
         val element = context.getDriver().findElement(context.by(selector));
         val value = element.getTagName().equals("input") ? element.getAttribute("value") : element.getText();
-        context.retry(() ->  assertEquals(getDescription(), expectedText, value));
+        assertTrue(getDescription(), expectedText.matcher(value).find());
     }
 
     @Override
     public String getDescription() {
-        return String.format("text of \"%s\" should be \"%s\"", selector, expectedText);
+        return String.format("text of \"%s\" should match \"%s\"", selector, expectedText);
     }
 }

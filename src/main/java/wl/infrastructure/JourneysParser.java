@@ -11,6 +11,7 @@ import wl.domain.step.interaction.*;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("WeakerAccess")
 @BuildParseTree
@@ -97,6 +98,7 @@ public class JourneysParser extends BaseParser<Object> {
                                 TitleShouldBe(),
                                 TitleShouldContain(),
                                 TextShouldBe(),
+                                TextShouldMatch(),
                                 AttributeShouldBe(),
                                 ShouldBeChecked(),
                                 ShouldNotBeChecked(),
@@ -134,6 +136,13 @@ public class JourneysParser extends BaseParser<Object> {
         );
     }
 
+    Rule TextShouldMatch() {
+        return Sequence(
+                "text of ", QuStr(), " should match ", QuStr(),
+                push(dto.addStep(TextOfShouldMatch.builder().expectedText(Pattern.compile((String) pop()))
+                        .selector(Selector.valueOf((String) pop())).build()))
+        );
+    }
 
     Rule Submit() {
         return Sequence("submit", push(dto.addStep(Submit.INSTANCE)));

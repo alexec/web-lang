@@ -6,3 +6,4 @@ Journey: "Searching on Google"
     submit
     title should be "Cheese! - Google Search"
     text of "input[name='q']" should be "Cheese!"
+    text of "input[name='q']" should match "Cheese"

@@ -105,6 +105,9 @@ mvn test-compile failsafe:integration-test failsafe:verify -Dwl.journey=radio
 | `switch to frame 0`                                                                              | Switch to a frame based on index.                       |
 | `switch to default content`                                                                      | Switch back to default content after switch to a frame. |
 | `dismiss alert`                                                                                  | Dismiss an alert.                                       |
+| `page should be "page"`                                                                          | Page should match.                                      |
+| `text of "p" should be "text"`                                                                   | Text should be equal.                                   |
+| `text of "p" should match "regexp"`                                                              | Text should be match.                                   |
 
 You can find more examples under [src/test/resources/it](src/test/resources/it).
 

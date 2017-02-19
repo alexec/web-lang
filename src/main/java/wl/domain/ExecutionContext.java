@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.val;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -15,10 +16,11 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ExecutionContext {
+    private static final int MILLIS = 500;
     private static final Consumer<WebDriver> SLEEP =
             (WebDriver ignored) -> {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(MILLIS);
                 } catch (InterruptedException e) {
                     throw new IllegalStateException(e);
                 }
@@ -57,6 +59,25 @@ public class ExecutionContext {
         return By.cssSelector(cssSelector);
     }
 
+    public void retry(Runnable block) {
+        int loops = 5;
+        for (int i = 0; i < loops; i++) {
+            try {
+                block.run();
+                return;
+            } catch (WebDriverException | AssertionError e) {
+                if (i ==  loops - 1) {
+                    throw e;
+                }
+            }
+            try {
+                Thread.sleep(MILLIS);
+            } catch (InterruptedException e) {
+                throw new IllegalStateException(e);
+            }
+        }
+    }
+
     public void waitUntil(Predicate<WebDriver> condition) {
         repeatUntil(condition, webDriver -> {
         });
@@ -82,4 +103,5 @@ public class ExecutionContext {
     public void setCurrentPage(Page page) {
         this.currentPage = page;
     }
+
 }
