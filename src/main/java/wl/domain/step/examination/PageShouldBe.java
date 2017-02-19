@@ -4,10 +4,9 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.val;
 import wl.domain.ExecutionContext;
-import wl.domain.step.Step;
 
 @Data
-public class PageShouldBe implements Step {
+public class PageShouldBe implements ExaminationStep {
     @NonNull
     private final String pageName;
 

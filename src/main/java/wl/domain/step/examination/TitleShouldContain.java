@@ -2,15 +2,15 @@ package wl.domain.step.examination;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.val;
 import org.openqa.selenium.WebDriver;
 import wl.domain.ExecutionContext;
-import wl.domain.step.Step;
 
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 @Data
-public class TitleShouldContain implements Step {
+public class TitleShouldContain implements ExaminationStep {
     @NonNull
     private final String expectedTitle;
 
@@ -25,7 +25,8 @@ public class TitleShouldContain implements Step {
     @Override
     public void execute(ExecutionContext context) {
         context.waitUntil((WebDriver driver) -> driver.getTitle().contains(expectedTitle));
-        assertThat(getDescription(), context.getDriver().getTitle(), containsString(expectedTitle));
+        val value = context.getDriver().getTitle();
+        assertThat(descriptionOfMismatch(value), value, containsString(expectedTitle));
     }
 
     @Override

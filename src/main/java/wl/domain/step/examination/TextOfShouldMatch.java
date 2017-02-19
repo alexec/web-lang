@@ -7,7 +7,6 @@ import lombok.NonNull;
 import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
-import wl.domain.step.Step;
 
 import java.util.regex.Pattern;
 
@@ -15,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 @Builder
 @Data
-public class TextOfShouldMatch implements Step {
+public class TextOfShouldMatch implements ExaminationStep {
     @NonNull
     private final Selector selector;
     @NonNull
@@ -30,7 +29,7 @@ public class TextOfShouldMatch implements Step {
     public void execute(ExecutionContext context) {
         val element = context.getDriver().findElement(context.by(selector));
         val value = element.getTagName().equals("input") ? element.getAttribute("value") : element.getText();
-        assertTrue(getDescription(), expectedText.matcher(value).find());
+        assertTrue(descriptionOfMismatch(value), expectedText.matcher(value).find());
     }
 
     @Override

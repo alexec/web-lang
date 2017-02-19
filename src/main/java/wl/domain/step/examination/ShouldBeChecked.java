@@ -5,12 +5,11 @@ import lombok.NonNull;
 import lombok.val;
 import wl.domain.ExecutionContext;
 import wl.domain.Selector;
-import wl.domain.step.Step;
 
 import static org.junit.Assert.assertTrue;
 
 @Data
-public class ShouldBeChecked implements Step {
+public class ShouldBeChecked implements ExaminationStep {
     @NonNull
     private final Selector selector;
 
