@@ -73,24 +73,22 @@ public class JourneyRunner extends ParentRunner<Step> {
             child.execute(context);
         } catch (Throwable t) {
             notifier.fireTestFailure(new Failure(description, t));
-            captureScreenshot(description);
+            tryCaptureScreenshot(description);
         } finally {
             notifier.fireTestFinished(description);
         }
     }
 
-    private void captureScreenshot(Description description) {
+    private void tryCaptureScreenshot(Description description) {
         val takesScreenshot = (TakesScreenshot) context.getDriver();
         Path file;
         try {
             file = takesScreenshot.getScreenshotAs(OutputType.FILE).toPath();
         } catch (UnsupportedOperationException e) {
-            //noinspection ThrowablePrintedToSystemOut
-            log.error("failed to take screenshot: " + e.getMessage());
             return;
         }
 
-        val screenshots = Paths.get("target", "screenshots");
+        val screenshots = Paths.get("screenshots");
         try {
             if (!screenshots.toFile().exists()) {
                 Files.createDirectory(screenshots);
