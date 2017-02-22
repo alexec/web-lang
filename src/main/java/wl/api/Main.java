@@ -14,16 +14,26 @@ import java.io.FileOutputStream;
 public class Main {
 
     public static void main(String[] args) {
+        File reports = new File("reports");
+        ensureReportsCreated(reports);
         val core = new JUnitCore();
         core.addListener(new PrettyListener());
         core.addListener(new JUnitResultFormatterAsRunListener(new XMLJUnitResultFormatter()) {
             @Override
             public void testStarted(Description description) throws Exception {
-                formatter.setOutput(new FileOutputStream(new File("reports", "TEST-" + description.getDisplayName() + ".xml")));
+                formatter.setOutput(new FileOutputStream(new File(reports, "TEST-" + description.getDisplayName().replaceAll("[^-_A-Za-z0-9]", "_") + ".xml")));
                 super.testStarted(description);
             }
         });
         val result = core.run(Main.class);
         System.exit(result.wasSuccessful() ? 0 : 1);
+    }
+
+    private static void ensureReportsCreated(File reports) {
+        if (!reports.exists()) {
+            if (!reports.mkdir()) {
+                throw new IllegalStateException();
+            }
+        }
     }
 }
