@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/alexec/web-lang.svg?style=svg)](https://circleci.com/gh/selenium-webdriver-in-practice/source)
+[![Build Status](https://travis-ci.org/alexec/web-lang.svg?branch=master)](https://travis-ci.org/alexec/web-lang)
 # Web Application Testing Lang
 
 A domain specific language for automating and testing web applications.
