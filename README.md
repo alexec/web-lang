@@ -51,6 +51,17 @@ If you want to use another browser add these options:
 -Dwebdriver.gecko.driver=/path/to/geckodriver -Dwl.browser=firefox
 ~~~
 
+The **root path** can be set using `wl.root`, and they URLs can be relative to that path:
+
+~~~
+-Dwl.root=http://localhost:8080
+~~~
+
+~~~shell
+    go to "/search" 
+~~~
+
+
 **Page Objects** are a first-class concept, the above journey could be written as follows:
 
 ~~~ruby

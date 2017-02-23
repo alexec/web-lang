@@ -23,8 +23,9 @@ public class GoTo implements Step {
     public void execute(ExecutionContext context) {
         val page = context.getPage(place);
         val url = page != null ? page.getUrl().toString() : place;
+        val relativeUrl = !url.startsWith("http");
 
-        context.getDriver().get(url);
+        context.getDriver().get(relativeUrl ? System.getProperty("wl.root") + url : url);
 
         context.setCurrentPage(page);
     }
